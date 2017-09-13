@@ -1,0 +1,135 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#topright {
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 10px;
+    box-shadow: #b7b7b7 -5px 5px 10px;
+    background-color: darkgray;
+}
+#topright input {
+    background-color: darkgray;
+    border: none;
+    border-bottom: solid black 1px;
+}
+
+#info {
+    margin: 0px;
+    padding: 10px;
+}
+#info img {
+    vertical-align: middle;
+    padding: 0px 5px 0px 0px;
+}
+
+#sharelink {
+    width: calc((100% - 10px) - 25px)
+}
+#dropbtn {
+    width: 20px;
+    padding-right: 5px;
+    text-align: center;
+    -moz-user-select: none; 
+    -webkit-user-select: none;
+    -ms-user-select:none; 
+    user-select:none;
+    -o-user-select:none;
+}
+
+.dropdown {
+    transition: all 1s;
+}
+.dropdown.down {
+    height: 100%;
+    display: block;
+}
+.dropdown {
+    height: 0%;
+    display: none;
+}
+
+#connecting {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: gold;
+    display: none;
+}
+#disconnected {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: #c94040;
+    display: none;
+}
+#banned {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: #c94040;
+    display: none;
+}
+
+#board {
+    background: black;
+    position: absolute;
+    font-size: 0;
+    flex-wrap: nowrap;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#board tr {
+    min-height: 0px;
+    min-height: 0px;
+}
+#board tr td {
+    min-height: 0px;
+    min-height: 0px;
+    background: red;
+    padding: 0px;
+    margin: 0px;
+    border: solid black 3px;
+}
+#board canvas {
+    width: 100px;
+    height: 100px;
+}
+
+#X {
+    background: red;
+    padding: 5px;
+    display: inline;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    -moz-user-select: none; 
+    -webkit-user-select: none;
+    -ms-user-select:none; 
+    user-select:none;
+    -o-user-select:none;
+    cursor: default;
+    border: solid black 2px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+
+#login {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); 
+    width: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    align-content: center;
+    text-align: center;
+}
