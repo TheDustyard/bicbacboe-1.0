@@ -1,3 +1,5 @@
+## WE NEED TO SETUP WSS FOR THE SERVER, OR USE A DIFFERENT HOST
+
 # OnlineTicTacToe.github.io
 Client for the stuffs
 
