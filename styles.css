@@ -48,10 +48,12 @@ html, body {
 .dropdown.down {
     height: 100%;
     display: block;
+    transition: height 1s;
 }
 .dropdown {
     height: 0%;
     display: none;
+    transition: height 1s;
 }
 
 #connecting {
