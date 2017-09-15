@@ -3,7 +3,28 @@ html, body {
     padding: 0;
     overflow: hidden;
 }
-
+#create {
+    background-color: #4c4c4c;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+#create:hover {
+        background-color: #212121;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
 #topright {
     display: block;
     position: absolute;
