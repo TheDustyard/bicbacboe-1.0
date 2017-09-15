@@ -84,7 +84,7 @@ var gameplaying = false;
 function login() {
     connecting();
 
-    socket = new WebSocket("ws://dusterthefirst.ddns.net:42691");
+    socket = new WebSocket("wss://dusterthefirst.ddns.net:42691");
     socketisopen = false;
     socket.onmessage = (event) => {
         let data = JSON.parse(event.data);
