@@ -3,7 +3,6 @@
     <head>
         <title>Tourney Tic Tac Toe</title>
         <script src="client.js"></script>
-        <script src="layout.js"></script>
         <link rel="stylesheet" href="styles.css">
     </head>
     <style>
@@ -43,9 +42,10 @@
         </table>
         
         <div id="gameinfo" style="display: none;">
-            <div>X: <span id="xman">None</span></div>
-            <div>O: <span id="oman">None</span></div>
+            <div class="notready" id="xname">X: <span id="xman">None</span></div>
+            <div class="notready" id="oname">O: <span id="oman">None</span></div>
             <div>Turn: <span id="turnman">Game not started</span></div>
+            <button onclick="toggleready();">toggle ready</button>
         </div>
         
         <div id="topright">

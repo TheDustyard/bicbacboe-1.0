@@ -171,3 +171,12 @@ html, body {
     align-content: center;
     text-align: center;
 }
+
+
+.ready {
+    background-color: green;
+}
+
+.notready {
+    background-color: red;
+}
