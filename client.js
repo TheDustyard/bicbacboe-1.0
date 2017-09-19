@@ -77,7 +77,7 @@ export type GameExists = {
 var socket; 
 var socketisopen;
 var piece;
-var pieces = {X:"None", O:"None"};
+var pieces = {X: "None", O: "None"};
 var yourturn = false;
 var gamestate;
 var gameplaying = false;
@@ -89,7 +89,8 @@ function login() {
     socketisopen = false;
     socket.onmessage = (event) => {
         let data = JSON.parse(event.data);
-        console.log(data);
+        console.log('raw', event.data);
+        console.log('parsed', data);
         switch (data.type) {
             case "joinedGame":
                 window.location.hash = data.tournamentID;
@@ -229,30 +230,36 @@ function connected() {
 }
 
 function gameValid() {
+    document.querySelector('#fullgame').style.display = "none";
+    document.querySelector('#invalidgame').style.display = "none";
     document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
     document.querySelector('#sharelink').value = window.location.href;
     document.querySelector('#create').style.display = "none";
     document.querySelector('#join').style.display = "inline";
 }
 function gameInvalid() {
+    document.querySelector('#fullgame').style.display = "none";
+    document.querySelector('#invalidgame').style.display = "block";
     document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Invalid-red.svg?style=flat-square`;
     document.querySelector('#sharelink').value = '';
     document.querySelector('#create').style.display = "inline";
     document.querySelector('#join').style.display = "none";
 }
 function gameFull() {
+    document.querySelector('#fullgame').style.display = "block";
+    document.querySelector('#invalidgame').style.display = "none";
     document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Full-red.svg?style=flat-square`;
     document.querySelector('#sharelink').value = '';
     document.querySelector('#create').style.display = "inline";
     document.querySelector('#join').style.display = "none";
 }
 function noGame() {
+    document.querySelector('#fullgame').style.display = "none";
+    document.querySelector('#invalidgame').style.display = "none";
     document.querySelector('#gameID').src = `https://img.shields.io/badge/Game%20ID-None-yellow.svg?style=flat-square`;
     document.querySelector('#sharelink').value = '';
     document.querySelector('#create').style.display = "inline";
     document.querySelector('#join').style.display = "none";
-    
-    alert('GAME INVALID');
 }
 
 function leftGame() {
@@ -263,10 +270,12 @@ function leftGame() {
     document.querySelector('#gameinfo').style.display = "none";
 }
 function joinedGame() {
+    document.querySelector('#fullgame').style.display = "none";
+    document.querySelector('#invalidgame').style.display = "none";
     document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
     document.querySelector('#sharelink').value = window.location.href;
     document.querySelector('#login').style.display = "none";
-    document.querySelector('#board').style.display = "block";
+    document.querySelector('#board').style.display = "none";
     document.querySelector('#X').style.display = "block";
     document.querySelector('#gameinfo').style.display = "block";
 }

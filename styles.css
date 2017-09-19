@@ -112,6 +112,20 @@ html, body {
     background-color: #c94040;
     display: none;
 }
+#fullgame {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: #c94040;
+    display: none;
+}
+#invalidgame {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: #c94040;
+    display: none;
+}
 
 #board {
     background: black;
