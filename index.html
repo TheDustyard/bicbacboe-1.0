@@ -9,10 +9,12 @@
         
     </style>
     
-    <body onload="login()">
+    <body onload="login()" onhashchange="validate();">
         <div id="connecting">Connecting ...</div>
         <div id="disconnected">Disconnected</div>
         <div id="banned">Banned</div>
+        <div id="fullgame">Game Full</div>
+        <div id="invalidgame">Invalid Game</div>
         
         <div onclick="leaveGame()" id="X" style="display: none;">Quit</div>
         
