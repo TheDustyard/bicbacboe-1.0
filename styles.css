@@ -4,40 +4,30 @@ html, body {
     overflow: hidden;
 }
 #nickname {
-    border: 2px gray;
-    border-radius: 4px;
-    color: black;
-    transition: background-color 0.5s;
-    transition: color 0.5s;
-    background-color: white;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid transparent;
 }
 #nickname:focus {
-    color: white;
-    background-color: black;
-        transition: background-color 0.5s;
-    transition: color 0.5s;
+    border-bottom: 1px solid black;
 }
-#create {
-    background-color: #4c4c4c;
+.gamebutton {
+    background-color: darkgreen;
     border: none;
     border-radius: 5px;
-    color: white;
     padding: 16px 32px;
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
-    transition: background-color 0.5s;
 }
-#create:hover {
-        background-color: #212121;
+.gamebutton:hover {
+    background-color: darkolivegreen;
     border: none;
     border-radius: 5px;
-    color: white;
     padding: 16px 32px;
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
-    transition: background-color 0.5s;
 }
 #topright {
     display: block;
@@ -126,6 +116,13 @@ html, body {
     background-color: #c94040;
     display: none;
 }
+#invalidname {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: #c94040;
+    display: none;
+}
 
 #board {
     background: black;
@@ -193,4 +190,8 @@ html, body {
 
 .notready {
     background-color: red;
+}
+
+#xname, #oname {
+    padding: 5px 10px;
 }

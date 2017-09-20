@@ -152,19 +152,27 @@ function createGame() {
     if (!socketisopen)
         return;
 
+    if (document.querySelector('#nickname').value === "" || document.querySelector('#nickname').value === null) {
+        nameinvalid();
+        return;
+    }
+    namevalid();
     socket.send(JSON.stringify({
         type: 'createGame',
-        nickname: document.getElementById('nickname').value
+        nickname: document.querySelector('#nickname').value
     }));
 }
 function joinGame() {
     validate();
-    if (window.location.hash !== "") {
+    if (window.location.hash !== "" && document.querySelector('#nickname').value !== "" && document.querySelector('#nickname').value !== null) {
         socket.send(JSON.stringify({
             type: 'joinGame',
             gameID: window.location.hash.substr(1),
-            nickname: document.getElementById('nickname').value
+            nickname: document.querySelector('#nickname').value
         }));
+        namevalid();
+    } else {
+        nameinvalid();
     }
 }
 function leaveGame() {
@@ -278,6 +286,13 @@ function joinedGame() {
     document.querySelector('#board').style.display = "none";
     document.querySelector('#X').style.display = "block";
     document.querySelector('#gameinfo').style.display = "block";
+}
+
+function nameinvalid() {
+    document.querySelector('#invalidname').style.display = "block";
+}
+function namevalid() {
+    document.querySelector('#invalidname').style.display = "none";
 }
 
 function matchUpdate(data) {

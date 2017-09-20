@@ -15,13 +15,14 @@
         <div id="banned">Banned</div>
         <div id="fullgame">Game Full</div>
         <div id="invalidgame">Invalid Game</div>
+        <div id="invalidname">Invalid Name</div>
         
         <div onclick="leaveGame()" id="X" style="display: none;">Quit</div>
         
         <div id="login">
             <input id="nickname" type="text" placeholder="Nickname"><br>
-            <button onclick="createGame()" id="create">Create game</button>
-            <button onclick="joinGame()" id="join" style="display: none;">Join game</button>
+            <button onclick="createGame()" id="create" class="gamebutton">Create game</button>
+            <button onclick="joinGame()" id="join" class="gamebutton" style="display: none;">Join game</button>
         </div>
         
         
@@ -44,8 +45,18 @@
         </table>
         
         <div id="gameinfo" style="display: none;">
-            <div class="notready" id="xname">X: <span id="xman">None</span></div>
-            <div class="notready" id="oname">O: <span id="oman">None</span></div>
+            <table cellspacing=0 cellpadding=0>
+                <tr>
+                    <td class="notready" id="xname">
+                        X: <span id="xman">None</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="notready" id="oname">
+                        O: <span id="oman">None</span>
+                    </td>
+                </tr>
+            </table>
             <div>Turn: <span id="turnman">Game not started</span></div>
             <button onclick="toggleready();">toggle ready</button>
         </div>
