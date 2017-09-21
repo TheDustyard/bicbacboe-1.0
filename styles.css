@@ -3,6 +3,30 @@ html, body {
     padding: 0;
     overflow: hidden;
 }
+
+@-webkit-keyframes animBack {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes animBack {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes animBack {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+body {
+	 background: linear-gradient(270deg, #d6b3ee, #cd2cce, #ce2c2c);
+	background-size: 600% 600%;
+	-webkit-animation: animBack 30s ease infinite;
+	-moz-animation: animBack 30s ease infinite;
+	animation: animBack 30s ease infinite;
+}
+
 #nickname {
     border: none;
     outline: none;
