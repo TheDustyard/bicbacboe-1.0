@@ -3,32 +3,30 @@ html, body {
     padding: 0;
     overflow: hidden;
 }
-#nickname {
-    border: none;
-    outline: none;
-    border-bottom: 1px solid transparent;
+
+@-webkit-keyframes animBack {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
 }
-#nickname:focus {
-    border-bottom: 1px solid black;
+@-moz-keyframes animBack {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
 }
-.gamebutton {
-    background-color: darkgreen;
-    border: none;
-    border-radius: 5px;
-    padding: 16px 32px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
+@keyframes animBack {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
 }
-.gamebutton:hover {
-    background-color: darkolivegreen;
-    border: none;
-    border-radius: 5px;
-    padding: 16px 32px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
+body {
+	 background: linear-gradient(270deg, #d6b3ee, #cd2cce, #ce2c2c);
+	background-size: 600% 600%;
+	-webkit-animation: animBack 30s ease infinite;
+	-moz-animation: animBack 30s ease infinite;
+	animation: animBack 30s ease infinite;
 }
+
 #topright {
     display: block;
     position: absolute;
@@ -73,12 +71,10 @@ html, body {
 .dropdown.down {
     height: 100%;
     display: block;
-    transition: height 1s;
 }
 .dropdown {
     height: 0%;
     display: none;
-    transition: height 1s;
 }
 
 #connecting {
@@ -100,27 +96,6 @@ html, body {
     text-align: center;
     padding: 5px;
     background-color: #c94040;
-    display: none;
-}
-#fullgame {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: goldenrod;
-    display: none;
-}
-#invalidgame {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: goldenrod;
-    display: none;
-}
-#invalidname {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: goldenrod;
     display: none;
 }
 
@@ -181,17 +156,4 @@ html, body {
     white-space: nowrap;
     align-content: center;
     text-align: center;
-}
-
-
-.ready {
-    background-color: green;
-}
-
-.notready {
-    background-color: red;
-}
-
-#xname, #oname {
-    padding: 5px 10px;
 }
