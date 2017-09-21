@@ -32,11 +32,16 @@ html {
     outline: none;
     border-bottom: 1px solid transparent;
     background: none;
+    transition: border-bottom 1s;
+    color: white;
 }
 #nickname:focus {
+    color: white;
     border-bottom: 1px solid black;
+    transition: border-bottom 1s;
 }
 .gamebutton {
+    color: white;
     background-color: darkgreen;
     border: none;
     border-radius: 5px;
@@ -44,8 +49,10 @@ html {
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
+    transition: background-color 1s;
 }
 .gamebutton:hover {
+    color: white;
     background-color: darkolivegreen;
     border: none;
     border-radius: 5px;
@@ -53,6 +60,7 @@ html {
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
+    transition: background-color 1s;
 }
 #topright {
     display: block;
@@ -119,6 +127,7 @@ html {
     padding: 5px;
     background-color: #c94040;
     display: none;
+    color: white;
 }
 #banned {
     width: 100%;
@@ -126,6 +135,7 @@ html {
     padding: 5px;
     background-color: #c94040;
     display: none;
+    color: white;
 }
 #fullgame {
     width: 100%;
@@ -133,6 +143,7 @@ html {
     padding: 5px;
     background-color: goldenrod;
     display: none;
+    color: white;
 }
 #invalidgame {
     width: 100%;
@@ -140,6 +151,7 @@ html {
     padding: 5px;
     background-color: goldenrod;
     display: none;
+    color: white;
 }
 #invalidname {
     width: 100%;
@@ -147,6 +159,7 @@ html {
     padding: 5px;
     background-color: goldenrod;
     display: none;
+    color: white;
 }
 
 #board {
