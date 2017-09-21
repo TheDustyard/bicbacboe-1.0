@@ -19,7 +19,7 @@ html, body {
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
 }
-body, .login {
+html {
 	background: linear-gradient(270deg, #d6b3ee, #cd2cce, #ce2c2c);
 	background-size: 600% 600%;
 	-webkit-animation: animBack 30s ease infinite;
@@ -31,6 +31,7 @@ body, .login {
     border: none;
     outline: none;
     border-bottom: 1px solid transparent;
+    background: none;
 }
 #nickname:focus {
     border-bottom: 1px solid black;
