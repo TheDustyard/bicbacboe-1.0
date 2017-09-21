@@ -106,21 +106,21 @@ html, body {
     width: 100%;
     text-align: center;
     padding: 5px;
-    background-color: #c94040;
+    background-color: goldenrod;
     display: none;
 }
 #invalidgame {
     width: 100%;
     text-align: center;
     padding: 5px;
-    background-color: #c94040;
+    background-color: goldenrod;
     display: none;
 }
 #invalidname {
     width: 100%;
     text-align: center;
     padding: 5px;
-    background-color: #c94040;
+    background-color: goldenrod;
     display: none;
 }
 

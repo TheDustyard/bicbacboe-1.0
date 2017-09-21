@@ -78,7 +78,7 @@ var socket;
 var socketisopen;
 var piece;
 var pieces = {X: "None", O: "None"};
-var yourturn = false;
+var turn;
 var gamestate;
 var gameplaying = false;
 var isready = false;
@@ -217,6 +217,7 @@ function connecting() {
     document.querySelector('#reconnect').setAttribute('disabled', true);
 }
 function disconnected() {
+    leftGame();
     clearTimeout(connectimeout);
     document.querySelector('#disconnected').style.display = "block";
     document.querySelector('#connecting').style.display = "none";
@@ -224,11 +225,9 @@ function disconnected() {
     document.querySelector('#reconnect').removeAttribute('disabled');
 }
 function banned() {
-    clearTimeout(connectimeout);
+    disconnected();
     document.querySelector('#banned').style.display = "block";
-    document.querySelector('#connecting').style.display = "none";
     document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Banned-red.svg?style=flat-square";
-    document.querySelector('#reconnect').setAttribute('disabled', true);
 }
 function connected() {
     clearTimeout(connectimeout);
@@ -297,7 +296,7 @@ function namevalid() {
 
 function matchUpdate(data) {
     pieces = {X:data.X ? data.X.name : 'None', O:data.O ? data.O.name : 'None'};
-    yourturn = data.turn === this.piece;
+    turn = data.turn;
     gamestate = data.state;
     gameplaying = data.state === 'playing';
 
@@ -315,9 +314,12 @@ function matchUpdate(data) {
         document.querySelector('#oname').className = "notready";
     
     if (this.gameplaying === true) {
-        document.querySelector('#turnman').innerHTML = yourturn ? pieces[piece] : pieces[piece === "x" ? 'O' : 'X'];
+        document.querySelector('#toggleready').style.display = "none";
+        document.querySelector('#turnman').innerHTML = pieces[turn.toUpperCase()];
+        document.querySelector('#turndude').style.display = "block";
     } else {
-        document.querySelector('#turnman').innerHTML = "Game not started";
+        document.querySelector('#toggleready').style.display = "block";
+        document.querySelector('#turndude').style.display = "none";
     }
 }
 

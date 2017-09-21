@@ -12,11 +12,11 @@
     
     <body onload="login()" onhashchange="validate();">
         <div id="connecting">Connecting ...</div>
-        <div id="disconnected">Disconnected</div>
+        <div id="disconnected">Disconnected from server</div>
         <div id="banned">Banned</div>
-        <div id="fullgame">Game Full</div>
-        <div id="invalidgame">Invalid Game</div>
-        <div id="invalidname">Invalid Name</div>
+        <div id="fullgame">Game full</div>
+        <div id="invalidgame">Invalid game</div>
+        <div id="invalidname">Invalid name</div>
         
         <div onclick="leaveGame()" id="X" style="display: none;">Quit</div>
         
@@ -58,8 +58,8 @@
                     </td>
                 </tr>
             </table>
-            <div>Turn: <span id="turnman">Game not started</span></div>
-            <button onclick="toggleready();">toggle ready</button>
+            <div id="turndude">Turn: <span id="turnman">Game not started</span></div>
+            <button onclick="toggleready();" id="toggleready">toggle ready</button>
         </div>
         
         <div id="topright">
