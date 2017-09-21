@@ -30,7 +30,7 @@ html {
 #nickname {
     border: none;
     outline: none;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid #4f4f4f;
     background: none;
     transition: border-bottom 1s;
     color: white;
