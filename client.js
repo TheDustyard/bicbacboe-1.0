@@ -17,8 +17,13 @@ var Canvas = {
   ctx: null,
   /** The WebGL Context. Will be <b>null</b> if WebGL is off */
   gl: null,
-  /** The Canvas's render method<br>(Yes, I could've made it separate, but for JSDoc cleanliness, I added it to the object) */
-  render: function() { window.requestAnimationFrame(Canvas.render); }
+  /** The Canvas's render method<br>(Yes, I could've made it separate, but for JSDoc cleanliness, I added it to the object - FatalError) */
+  render: function() { window.requestAnimationFrame(Canvas.render); },
+  /**
+   * Used for storing the states of any effects and animations<br>
+   * (Afterall, I want the line drawing and board highlighting and all that to look nice - FatalError)
+   */
+  effectBuffer: {}
 };
 
 var piece;
@@ -31,10 +36,21 @@ var isready = false;
 
 /** Executed when all the HTML loads */
 function login() {
+    // Prepare board mouseover effect
+    for(let x = 0; x < 3; x++) {
+      for(let y = 0; y < 3; y++) {
+        let boardpos = "";
+        if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
+        if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
+        Canvas.effectBuffer[boardpos + "_board_mouseover"] = 0;
+      }
+    }
+
     // Prepare our Canvas
     Canvas.canvas = $("#cv");
-    Canvas.gl = Canvas.canvas.getContext('webgl');
-    if(!Canvas.gl) Canvas.ctx = Canvas.canvas.getContext('2d');
+    //Canvas.gl = Canvas.canvas.getContext('webgl');
+    /*if(!Canvas.gl)*/ Canvas.ctx = Canvas.canvas.getContext('2d');
+    window.requestAnimationFrame(Canvas.render);
 
     connecting();
 
@@ -99,24 +115,24 @@ function validate() {
 /** Creates a game  */
 function createGame() {
     if (socket.readyState !== socket.OPEN) return;
-    if (document.querySelector('#nickname').value === "" || document.querySelector('#nickname').value === null) {
+    if ($('#nickname').value === "" || $('#nickname').value === null) {
         nameinvalid();
         return;
     }
     namevalid();
     socket.send(JSON.stringify({
         type: 'createGame',
-        nickname: document.querySelector('#nickname').value
+        nickname: $('#nickname').value
     }));
 }
 /** Attempts to join a game using the hash */
 function joinGame() {
     validate();
-    if (window.location.hash !== "" && document.querySelector('#nickname').value !== "" && document.querySelector('#nickname').value !== null) {
+    if (window.location.hash !== "" && $('#nickname').value !== "" && $('#nickname').value !== null) {
         socket.send(JSON.stringify({
             type: 'joinGame',
             gameID: window.location.hash.substr(1),
-            nickname: document.querySelector('#nickname').value
+            nickname: $('#nickname').value
         }));
         namevalid();
     } else nameinvalid();
@@ -163,13 +179,13 @@ let connectimeout;
  * @memberof Visuals
  */
 function connecting() {
-    document.querySelector('#disconnected').style.display = "none";
-    document.querySelector('#banned').style.display = "none";
+    $('#disconnected').style.display = "none";
+    $('#banned').style.display = "none";
     connectimeout = setTimeout(() => {
-        document.querySelector('#connecting').style.display = "block";
+        $('#connecting').style.display = "block";
     }, 1000);
-    document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Connecting...-yellow.svg?style=flat-square";
-    document.querySelector('#reconnect').setAttribute('disabled', true); // Disables the reconnect button?
+    $('#status').src = "https://img.shields.io/badge/Connection%20Status-Connecting...-yellow.svg?style=flat-square";
+    $('#reconnect').setAttribute('disabled', true); // Disables the reconnect button?
 }
 /**
  * Disconnects you from the game and returns you back to the main screen
@@ -178,10 +194,10 @@ function connecting() {
 function disconnected() {
     leftGame();
     clearTimeout(connectimeout);
-    document.querySelector('#disconnected').style.display = "block";
-    document.querySelector('#connecting').style.display = "none";
-    document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Disconnected-yellow.svg?style=flat-square";
-    document.querySelector('#reconnect').removeAttribute('disabled'); // Enables the reconnect button?
+    $('#disconnected').style.display = "block";
+    $('#connecting').style.display = "none";
+    $('#status').src = "https://img.shields.io/badge/Connection%20Status-Disconnected-yellow.svg?style=flat-square";
+    $('#reconnect').removeAttribute('disabled'); // Enables the reconnect button?
 }
 /**
  * Shows the banned text <i>:yellow_fruit:</i>
@@ -189,8 +205,8 @@ function disconnected() {
  */
 function banned() {
     disconnected();
-    document.querySelector('#banned').style.display = "block";
-    document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Banned-red.svg?style=flat-square";
+    $('#banned').style.display = "block";
+    $('#status').src = "https://img.shields.io/badge/Connection%20Status-Banned-red.svg?style=flat-square";
 }
 /**
  * Recovers from the connecting status and shows the connected status
@@ -198,68 +214,68 @@ function banned() {
  */
 function connected() {
     clearTimeout(connectimeout);
-    document.querySelector('#connecting').style.display = "none";
-    document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Connected-green.svg?style=flat-square";
-    document.querySelector('#reconnect').setAttribute('disabled', true); // Disables the reconnect button? Is there even a reconnect button?
+    $('#connecting').style.display = "none";
+    $('#status').src = "https://img.shields.io/badge/Connection%20Status-Connected-green.svg?style=flat-square";
+    $('#reconnect').setAttribute('disabled', true); // Disables the reconnect button? Is there even a reconnect button?
 }
 /**
  * Hides all warnings about an invalid game
  * @memberof Visuals
  */
 function gameValid() {
-    document.querySelector('#fullgame').style.display = "none";
-    document.querySelector('#invalidgame').style.display = "none";
-    document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
-    document.querySelector('#sharelink').value = window.location.href; // Sets the share link in the top right corner
-    document.querySelector('#create').style.display = "none";
-    document.querySelector('#join').style.display = "inline";
+    $('#fullgame').style.display = "none";
+    $('#invalidgame').style.display = "none";
+    $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
+    $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
+    $('#create').style.display = "none";
+    $('#join').style.display = "inline";
 }
 /**
  * Shows a <b>Invalid Game</b> message
  * @memberof Visuals
  */
 function gameInvalid() {
-    document.querySelector('#fullgame').style.display = "none";
-    document.querySelector('#invalidgame').style.display = "block";
-    document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Invalid-red.svg?style=flat-square`;
-    document.querySelector('#sharelink').value = '';
-    document.querySelector('#create').style.display = "inline";
-    document.querySelector('#join').style.display = "none";
+    $('#fullgame').style.display = "none";
+    $('#invalidgame').style.display = "block";
+    $('#gameID').src = `https://img.shields.io/badge/Game-Invalid-red.svg?style=flat-square`;
+    $('#sharelink').value = '';
+    $('#create').style.display = "inline";
+    $('#join').style.display = "none";
 }
 /**
  * Shows a <b>Full Game</b> message
  * @memberof Visuals
  */
 function gameFull() {
-    document.querySelector('#fullgame').style.display = "block";
-    document.querySelector('#invalidgame').style.display = "none";
-    document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Full-red.svg?style=flat-square`;
-    document.querySelector('#sharelink').value = '';
-    document.querySelector('#create').style.display = "inline";
-    document.querySelector('#join').style.display = "none";
+    $('#fullgame').style.display = "block";
+    $('#invalidgame').style.display = "none";
+    $('#gameID').src = `https://img.shields.io/badge/Game-Full-red.svg?style=flat-square`;
+    $('#sharelink').value = '';
+    $('#create').style.display = "inline";
+    $('#join').style.display = "none";
 }
 /**
  * Shows a <b>No Game</b> message
  * @memberof Visuals
  */
 function noGame() {
-    document.querySelector('#fullgame').style.display = "none";
-    document.querySelector('#invalidgame').style.display = "none";
-    document.querySelector('#gameID').src = `https://img.shields.io/badge/Game%20ID-None-yellow.svg?style=flat-square`;
-    document.querySelector('#sharelink').value = '';
-    document.querySelector('#create').style.display = "inline";
-    document.querySelector('#join').style.display = "none";
+    $('#fullgame').style.display = "none";
+    $('#invalidgame').style.display = "none";
+    $('#gameID').src = `https://img.shields.io/badge/Game%20ID-None-yellow.svg?style=flat-square`;
+    $('#sharelink').value = '';
+    $('#create').style.display = "inline";
+    $('#join').style.display = "none";
 }
 /**
  * Disconnets you from the current game and returns you back to the login page
  * @memberof Visuals
  */
 function leftGame() {
-    document.querySelector('#sharelink').value = "";
-    document.querySelector('#login').style.display = "block";
-    document.querySelector('#board').style.display = "none";
-    document.querySelector('#X').style.display = "none"; // Hides the Quit button
-    document.querySelector('#gameinfo').style.display = "none";
+    $('#sharelink').value = "";
+    $('#login').style.display = "block";
+    $('#board').style.display = "none";
+    $('#X').style.display = "none"; // Hides the Quit button
+    $('#gameinfo').style.display = "none";
     window.location.hash = ""; // Removes the hash in the page URL
 }
 /**
@@ -267,29 +283,40 @@ function leftGame() {
  * @memberof Visuals
  */
 function joinedGame() {
-    document.querySelector('#fullgame').style.display = "none";
-    document.querySelector('#invalidgame').style.display = "none";
-    document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
-    document.querySelector('#sharelink').value = window.location.href; // Sets the share link in the top right corner
-    document.querySelector('#login').style.display = "none";
-    document.querySelector('#board').style.display = "block";
-    document.querySelector('#X').style.display = "block"; // Shows the Quit button
-    document.querySelector('#gameinfo').style.display = "block";
+    $('#fullgame').style.display = "none";
+    $('#invalidgame').style.display = "none";
+    $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
+    $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
+    $('#login').style.display = "none";
+    $('#board').style.display = "block";
+    $('#X').style.display = "block"; // Shows the Quit button
+    $('#gameinfo').style.display = "block";
+    // Reset board mouseover effect
+    for(let x = 0; x < 3; x++) {
+      for(let y = 0; y < 3; y++) {
+        let boardpos = "";
+        if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
+        if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
+        Canvas.effectBuffer[boardpos + "_board_mouseover"] = 0;
+      }
+    }
 }
 /**
  * Shows an invalid name error
  * @memberof Visuals
  */
 function nameinvalid() {
-    document.querySelector('#invalidname').style.display = "block";
+    $('#invalidname').style.display = "block";
 }
 /**
  * Hides the invalid name error
  * @memberof Visuals
  */
 function namevalid() {
-    document.querySelector('#invalidname').style.display = "none";
+    $('#invalidname').style.display = "none";
 }
+
+
 
 /** Updates the match */
 function matchUpdate(data) {
@@ -300,46 +327,33 @@ function matchUpdate(data) {
     gameplaying = data.state === 'playing';
 
     // Set the names in the top left
-    document.querySelector('#xman').innerHTML = pieces.X ? pieces.X : 'None';
-    document.querySelector('#oman').innerHTML = pieces.O ? pieces.O : 'None';
+    $('#xman').innerHTML = pieces.X ? pieces.X : 'None';
+    $('#oman').innerHTML = pieces.O ? pieces.O : 'None';
 
     // Check if X side is ready (I think)
     if (data.X)
-        document.querySelector('#xname').className = data.X.ready ? "ready" : "notready";
+        $('#xname').className = data.X.ready ? "ready" : "notready";
     else
-        document.querySelector('#xname').className = "notready";
+        $('#xname').className = "notready";
 
     // Check if O side is ready (I thonk)
     if (data.O)
-        document.querySelector('#oname').className = data.O.ready ? "ready" : "notready";
+        $('#oname').className = data.O.ready ? "ready" : "notready";
     else
-        document.querySelector('#oname').className = "notready";
+        $('#oname').className = "notready";
 
     if (this.gameplaying === true) {
-        document.querySelector('#toggleready').style.display = "none";
-        document.querySelector('#turnman').innerHTML = pieces[turn.toUpperCase()];
-        document.querySelector('#turndude').style.display = "block";
+        $('#toggleready').style.display = "none";
+        $('#turnman').innerHTML = pieces[turn.toUpperCase()];
+        $('#turndude').style.display = "block";
     } else {
-        document.querySelector('#toggleready').style.display = "block";
-        document.querySelector('#turndude').style.display = "none";
+        $('#toggleready').style.display = "block";
+        $('#turndude').style.display = "none";
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 function dropdown(search, that) {
-    let element = document.querySelector(search);
+    let element = $(search);
     if (element.classList.contains('down')) {
         if (that) {
             that.innerHTML = '&#9658;';
@@ -364,6 +378,7 @@ function makemove(position) {
 
 }
 
+// ONLY USABLE WITH 2D CONTEXT RIGHT NOW!
 function drawEllipse(ctx, x, y, w, h) {
   var kappa = .5522848,
       ox = (w / 2) * kappa, // control point offset horizontal
@@ -381,4 +396,36 @@ function drawEllipse(ctx, x, y, w, h) {
   ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
   //ctx.closePath(); // not used correctly, see comments (use to close off open path)
   ctx.stroke();
+}
+
+Canvas.render = function() {
+  // Shortcuts so we don't have to type out the entire thing every time
+  let gl = Canvas.gl; let ctx = Canvas.ctx;
+  // GL Preparation
+  if(gl) {
+    gl.viewport(0, 0, 360, 360);
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  }
+
+  // Board rendering
+  if(gl) {
+
+  } else if(ctx) { // To avoid any crashes
+    for(let x = 0; x < 3; x++) {
+      for(let y = 0; y < 3; y++) {
+        let boardpos = "";
+        if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
+        if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
+
+        let blueColor = Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"]).toString(16);
+        if(blueColor.length === 1) blueColor = "0" + blueColor;
+        ctx.fillStyle = "#FF" + (22 + Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"])).toString(16) + blueColor;
+        ctx.fillRect((110 * x) + 10, (110 * y) + 10, 100, 100);
+      }
+    }
+  }
+
+  // There's going to be more stuff here :P
+  window.requestAnimationFrame(Canvas.render);
 }
