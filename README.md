@@ -1,5 +1,10 @@
-# STAY AWAY FROM USING BULMA, JQUERY OR OTHER THIRD PARTY LIBRARIES
+# 🅱ic 🅱ac 🅱oe
 
-MESSAGES THAT GET SENT TO THE CLIENT CAN BE FOUND [HERE](https://github.com/OnlineTicTacToe/Server/blob/master/Classes/ServerMessage.ts)
+> [Join Discord Server](https://discord.gg/hEDsBac)
 
-MESSAGES THAT YOU CAN SEND TO THE SERVER CAN BE FOUND [HERE](https://github.com/OnlineTicTacToe/Server/blob/master/Classes/ClientMessage.ts)
+> [Play 🅱ic 🅱ac 🅱oe](https://onlinetictactoe.github.io)
+
+## Developer information:
+> [Messages sent to the client](https://github.com/OnlineTicTacToe/Server/blob/master/Classes/ServerMessage.ts)
+
+> [Messages sent to the server](https://github.com/OnlineTicTacToe/Server/blob/master/Classes/ClientMessage.ts)
