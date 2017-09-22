@@ -329,7 +329,7 @@ function joinedGame() {
     document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
     document.querySelector('#sharelink').value = window.location.href; // Sets the share link in the top right corner
     document.querySelector('#login').style.display = "none";
-    document.querySelector('#board').style.display = "none";
+    document.querySelector('#board').style.display = "block";
     document.querySelector('#X').style.display = "block"; // Shows the Quit button
     document.querySelector('#gameinfo').style.display = "block";
 }
