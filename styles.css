@@ -96,9 +96,9 @@ html {
     width: 20px;
     padding-right: 5px;
     text-align: center;
-    -moz-user-select: none; 
+    -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select:none; 
+    -ms-user-select:none;
     user-select:none;
     -o-user-select:none;
 }
@@ -169,21 +169,9 @@ html {
     top: 50%;
     transform: translate(-50%, -50%);
 }
-#board tr {
-    min-height: 0px;
-    min-height: 0px;
-}
-#board tr td {
-    min-height: 0px;
-    min-height: 0px;
-    background: red;
-    padding: 0px;
-    margin: 0px;
-    border: solid black 3px;
-}
 #board canvas {
-    width: 100px;
-    height: 100px;
+    width: 340px;
+    height: 340px;
 }
 
 #X {
@@ -195,9 +183,9 @@ html {
     text-align: center;
     height: 30px;
     line-height: 30px;
-    -moz-user-select: none; 
+    -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select:none; 
+    -ms-user-select:none;
     user-select:none;
     -o-user-select:none;
     cursor: default;
@@ -211,7 +199,7 @@ html {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
     width: auto;
     flex-wrap: nowrap;
     white-space: nowrap;
