@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <style>
-        
+
     </style>
-    
+
     <body onload="login()" onhashchange="validate();">
         <div id="connecting">Connecting ...</div>
         <div id="disconnected">Disconnected from server</div>
@@ -17,16 +17,16 @@
         <div id="fullgame">Game full</div>
         <div id="invalidgame">Invalid game</div>
         <div id="invalidname">Invalid name</div>
-        
+
         <div onclick="leaveGame()" id="X" style="display: none;">Quit</div>
-        
+
         <div id="login">
             <input id="nickname" type="text" placeholder="Nickname"><br>
             <button onclick="createGame()" id="create" class="gamebutton">Create game</button>
             <button onclick="joinGame()" id="join" class="gamebutton" style="display: none;">Join game</button>
         </div>
-        
-        
+
+
         <table id="board" style="display: none;">
             <tr>
                 <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="topLeft" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
@@ -44,7 +44,7 @@
                 <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="bottomRight" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
             </tr>
         </table>
-        
+
         <div id="gameinfo" style="display: none;">
             <table cellspacing=0 cellpadding=0>
                 <tr>
@@ -59,9 +59,9 @@
                 </tr>
             </table>
             <div id="turndude">Turn: <span id="turnman">Game not started</span></div>
-            <button onclick="toggleready();" id="toggleready">toggle ready</button>
+            <button onclick="isready = !isready; ready(isready);" id="toggleready">toggle ready</button>
         </div>
-        
+
         <div id="topright">
             <span onclick="dropdown('#info', this)" id="dropbtn">&#9658;</span><input id="sharelink" type="text" readonly placeholder="Not in game">
             <table id="info" class="dropdown">
