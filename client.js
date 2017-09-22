@@ -77,9 +77,9 @@ export type GameExists = {
 /**
  * Basically equals <b>document.querySelector</b> ¯\_(ツ)_/¯<br>
  * Small change? I THINK NOT!
- * @kind constant
+ * @kind method
  */
-const $ = document.querySelector;
+const $ = function() { return document.querySelector.apply(document, arguments); };
 
 var socket;
 
