@@ -74,6 +74,13 @@ export type GameExists = {
 };
 */
 
+/**
+ * Basically equals <b>document.querySelector</b> ¯\_(ツ)_/¯<br>
+ * Small change? I THINK NOT!
+ * @kind constant
+ */
+const $ = document.querySelector;
+
 var socket;
 
 var piece;
@@ -203,7 +210,7 @@ function ready(isready) {
 //////////VISUALS\\\\\\\\\\\\
 /**
  * A "category" of functions that are for Visual effects only.
- * DO NOT PREFIX Visuals. !
+ * DO NOT PREFIX <b>Visuals.</b>!
  * @namespace Visuals
  */
 
