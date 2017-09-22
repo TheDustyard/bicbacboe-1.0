@@ -8,3 +8,5 @@
 > [Messages sent to the client](https://github.com/OnlineTicTacToe/Server/blob/master/Classes/ServerMessage.ts)
 
 > [Messages sent to the server](https://github.com/OnlineTicTacToe/Server/blob/master/Classes/ClientMessage.ts)
+
+> Avoid using any 3rd party libraries including jQuery
