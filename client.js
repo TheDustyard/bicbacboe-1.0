@@ -275,6 +275,7 @@ function leftGame() {
     document.querySelector('#board').style.display = "none";
     document.querySelector('#X').style.display = "none";
     document.querySelector('#gameinfo').style.display = "none";
+    window.location.hash = "";
 }
 function joinedGame() {
     document.querySelector('#fullgame').style.display = "none";
