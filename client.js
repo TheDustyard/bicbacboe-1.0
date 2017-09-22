@@ -74,23 +74,25 @@ export type GameExists = {
 };
 */
 
-var socket; 
-var socketisopen;
+var socket;
+
 var piece;
 var pieces = {X: "None", O: "None"};
 var turn;
+
 var gamestate;
 var gameplaying = false;
 var isready = false;
+
+/** Executed when all the HTML loads */
 function login() {
     connecting();
 
     socket = new WebSocket("wss://dusterthefirst.ddns.net:42691");
-    socketisopen = false;
+    // When we receive a socket message
     socket.onmessage = (event) => {
         let data = JSON.parse(event.data);
-        console.log('raw', event.data);
-        console.log('parsed', data);
+        console.log('WS Message: ', data);
         switch (data.type) {
             case "joinedGame":
                 window.location.hash = data.tournamentID;
@@ -115,43 +117,38 @@ function login() {
                 break;
         }
     }
+    // Socket opened
     socket.onopen = (event) => {
         console.log("Connected to " + socket.url);
-        socketisopen = true;
         connected();
         validate();
     };
+    // Socket closed
     socket.onclose = (event) => {
         console.log("Disconnected from " + socket.url);
-        socketisopen = false;
-        if (event.reasonCode === 1010) {
-            banned();
-        } else {
-            disconnected();
-        }
+        if (event.reasonCode === 1010) banned();
+        else disconnected();
+        // RESET ALL THE THINGS
         piece = undefined;
         yourturn = false;
         gamestate = undefined;
         gameplaying = false;
     }
-    socket.onerror = (error) => {
-        socketisopen = false;
-        disconnected();
-    }
+    // Socket error :/
+    socket.onerror = (error) => { disconnected(); }
 }
+/** Checks if the game hash is a valid game */
 function validate() {
-    if (window.location.hash.substr(1) !== "")
-        socket.send(JSON.stringify({
+    if (window.location.hash.substr(1) !== "") // Check if we have a hash
+        socket.send(JSON.stringify({ // Send a request to the server
             type: 'validateGame',
             ID: window.location.hash.substr(1)
         }));
-    else
-        noGame();
+    else noGame(); // We don't have a hash, so show an error
 }
+/** Creates a game  */
 function createGame() {
-    if (!socketisopen)
-        return;
-
+    if (socket.readyState !== socket.OPEN) return;
     if (document.querySelector('#nickname').value === "" || document.querySelector('#nickname').value === null) {
         nameinvalid();
         return;
@@ -162,6 +159,7 @@ function createGame() {
         nickname: document.querySelector('#nickname').value
     }));
 }
+/** Attempts to join a game using the hash */
 function joinGame() {
     validate();
     if (window.location.hash !== "" && document.querySelector('#nickname').value !== "" && document.querySelector('#nickname').value !== null) {
@@ -171,42 +169,49 @@ function joinGame() {
             nickname: document.querySelector('#nickname').value
         }));
         namevalid();
-    } else {
-        nameinvalid();
-    }
+    } else nameinvalid();
 }
+/** Leaves the game */
 function leaveGame() {
     socket.send(JSON.stringify({
         type: 'leaveGame'
     }));
+    // RESET ALL THE THINGS
     piece = undefined;
     yourturn = false;
     gamestate = undefined;
     gameplaying = false;
 
 }
+/** Attempts a reconnect */
 function reconnect() {
-    if(!socketisopen)
+    if(socket.readyState !== socket.OPEN)
         login();
 }
+/**
+ * Changes the ready state
+ * @param {boolean} isready - Ready state
+ */
 function ready(isready) {
     socket.send(JSON.stringify({
         type: 'ready',
         isReady: isready
     }));
 }
-function toggleready() {
-    isready = !isready
-    
-    ready(isready);
-}
-
-
-
-
+//function toggleready() { isready = !isready; ready(isready); } // Not necessary cause onclick does have full JS support (Check #toggleready in index.html)
 
 //////////VISUALS\\\\\\\\\\\\
+/**
+ * A "category" of functions that are for Visual effects only.
+ * DO NOT PREFIX Visuals. !
+ * @namespace Visuals
+ */
+
 let connectimeout;
+/**
+ * Shows a connecting status
+ * @memberof Visuals
+ */
 function connecting() {
     document.querySelector('#disconnected').style.display = "none";
     document.querySelector('#banned').style.display = "none";
@@ -214,36 +219,55 @@ function connecting() {
         document.querySelector('#connecting').style.display = "block";
     }, 1000);
     document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Connecting...-yellow.svg?style=flat-square";
-    document.querySelector('#reconnect').setAttribute('disabled', true);
+    document.querySelector('#reconnect').setAttribute('disabled', true); // Disables the reconnect button?
 }
+/**
+ * Disconnects you from the game and returns you back to the main screen
+ * @memberof Visuals
+ */
 function disconnected() {
     leftGame();
     clearTimeout(connectimeout);
     document.querySelector('#disconnected').style.display = "block";
     document.querySelector('#connecting').style.display = "none";
     document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Disconnected-yellow.svg?style=flat-square";
-    document.querySelector('#reconnect').removeAttribute('disabled');
+    document.querySelector('#reconnect').removeAttribute('disabled'); // Enables the reconnect button?
 }
+/**
+ * Shows the banned text <i>:yellow_fruit:</i>
+ * @memberof Visuals
+ */
 function banned() {
     disconnected();
     document.querySelector('#banned').style.display = "block";
     document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Banned-red.svg?style=flat-square";
 }
+/**
+ * Recovers from the connecting status and shows the connected status
+ * @memberof Visuals
+ */
 function connected() {
     clearTimeout(connectimeout);
     document.querySelector('#connecting').style.display = "none";
     document.querySelector('#status').src = "https://img.shields.io/badge/Connection%20Status-Connected-green.svg?style=flat-square";
-    document.querySelector('#reconnect').setAttribute('disabled', true);
+    document.querySelector('#reconnect').setAttribute('disabled', true); // Disables the reconnect button? Is there even a reconnect button?
 }
-
+/**
+ * Hides all warnings about an invalid game
+ * @memberof Visuals
+ */
 function gameValid() {
     document.querySelector('#fullgame').style.display = "none";
     document.querySelector('#invalidgame').style.display = "none";
     document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
-    document.querySelector('#sharelink').value = window.location.href;
+    document.querySelector('#sharelink').value = window.location.href; // Sets the share link in the top right corner
     document.querySelector('#create').style.display = "none";
     document.querySelector('#join').style.display = "inline";
 }
+/**
+ * Shows a <b>Invalid Game</b> message
+ * @memberof Visuals
+ */
 function gameInvalid() {
     document.querySelector('#fullgame').style.display = "none";
     document.querySelector('#invalidgame').style.display = "block";
@@ -252,6 +276,10 @@ function gameInvalid() {
     document.querySelector('#create').style.display = "inline";
     document.querySelector('#join').style.display = "none";
 }
+/**
+ * Shows a <b>Full Game</b> message
+ * @memberof Visuals
+ */
 function gameFull() {
     document.querySelector('#fullgame').style.display = "block";
     document.querySelector('#invalidgame').style.display = "none";
@@ -260,6 +288,10 @@ function gameFull() {
     document.querySelector('#create').style.display = "inline";
     document.querySelector('#join').style.display = "none";
 }
+/**
+ * Shows a <b>No Game</b> message
+ * @memberof Visuals
+ */
 function noGame() {
     document.querySelector('#fullgame').style.display = "none";
     document.querySelector('#invalidgame').style.display = "none";
@@ -268,52 +300,71 @@ function noGame() {
     document.querySelector('#create').style.display = "inline";
     document.querySelector('#join').style.display = "none";
 }
-
+/**
+ * Disconnets you from the current game and returns you back to the login page
+ * @memberof Visuals
+ */
 function leftGame() {
     document.querySelector('#sharelink').value = "";
     document.querySelector('#login').style.display = "block";
     document.querySelector('#board').style.display = "none";
-    document.querySelector('#X').style.display = "none";
+    document.querySelector('#X').style.display = "none"; // Hides the Quit button
     document.querySelector('#gameinfo').style.display = "none";
-    window.location.hash = "";
+    window.location.hash = ""; // Removes the hash in the page URL
 }
+/**
+ * Hides all warnings and shows the game board
+ * @memberof Visuals
+ */
 function joinedGame() {
     document.querySelector('#fullgame').style.display = "none";
     document.querySelector('#invalidgame').style.display = "none";
     document.querySelector('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
-    document.querySelector('#sharelink').value = window.location.href;
+    document.querySelector('#sharelink').value = window.location.href; // Sets the share link in the top right corner
     document.querySelector('#login').style.display = "none";
     document.querySelector('#board').style.display = "none";
-    document.querySelector('#X').style.display = "block";
+    document.querySelector('#X').style.display = "block"; // Shows the Quit button
     document.querySelector('#gameinfo').style.display = "block";
 }
-
+/**
+ * Shows an invalid name error
+ * @memberof Visuals
+ */
 function nameinvalid() {
     document.querySelector('#invalidname').style.display = "block";
 }
+/**
+ * Hides the invalid name error
+ * @memberof Visuals
+ */
 function namevalid() {
     document.querySelector('#invalidname').style.display = "none";
 }
 
+/** Updates the match */
 function matchUpdate(data) {
+    // SET ALL THE STATES!
     pieces = {X:data.X ? data.X.name : 'None', O:data.O ? data.O.name : 'None'};
     turn = data.turn;
     gamestate = data.state;
     gameplaying = data.state === 'playing';
 
+    // Set the names in the top left
     document.querySelector('#xman').innerHTML = pieces.X ? pieces.X : 'None';
     document.querySelector('#oman').innerHTML = pieces.O ? pieces.O : 'None';
-    
+
+    // Check if X side is ready (I think)
     if (data.X)
         document.querySelector('#xname').className = data.X.ready ? "ready" : "notready";
-    else 
+    else
         document.querySelector('#xname').className = "notready";
-    
+
+    // Check if O side is ready (I thonk)
     if (data.O)
         document.querySelector('#oname').className = data.O.ready ? "ready" : "notready";
     else
         document.querySelector('#oname').className = "notready";
-    
+
     if (this.gameplaying === true) {
         document.querySelector('#toggleready').style.display = "none";
         document.querySelector('#turnman').innerHTML = pieces[turn.toUpperCase()];
