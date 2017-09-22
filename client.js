@@ -6,6 +6,20 @@
 const $ = function() { return document.querySelector.apply(document, arguments); };
 
 var socket;
+/**
+ * The Canvas object that controls the board
+ * @namespace
+ */
+var Canvas = {
+  /** The canvas element itself. */
+  canvas: null,
+  /** The 2D Context. Will be <b>null</b> if WebGL is on */
+  ctx: null,
+  /** The WebGL Context. Will be <b>null</b> if WebGL is off */
+  gl: null,
+  /** The Canvas's render method<br>(Yes, I could've made it separate, but for JSDoc cleanliness, I added it to the object) */
+  render: function() { window.requestAnimationFrame(Canvas.render); }
+};
 
 var piece;
 var pieces = {X: "None", O: "None"};
@@ -17,6 +31,11 @@ var isready = false;
 
 /** Executed when all the HTML loads */
 function login() {
+    // Prepare our Canvas
+    Canvas.canvas = $("#cv");
+    Canvas.gl = Canvas.canvas.getContext('webgl');
+    if(!Canvas.gl) Canvas.ctx = Canvas.canvas.getContext('2d');
+
     connecting();
 
     socket = new WebSocket("wss://dusterthefirst.ddns.net:42691");
@@ -334,75 +353,13 @@ function dropdown(search, that) {
     }
 }
 
-function faded(that) {
-    if (that.dataset.piece !== "" || !gameplaying || !yourturn)
+function makemove(position) {
+    if (!yourturn)
         return;
-
-    let canvas = that.getElementsByClassName('cv')[0];
-
-    let ctx = canvas.getContext("2d");
-
-    ctx.lineWidth = canvas.width / 10;
-    ctx.imageSmoothingEnabled= false;
-    ctx.strokeStyle="#b7b7b7";
-
-    if (piece === 'x') {
-        ctx.beginPath();
-        ctx.moveTo(canvas.width / 10,canvas.height / 10);
-        ctx.lineTo(canvas.width - (canvas.width / 10), canvas.height - (canvas.height / 10));
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(canvas.width - (canvas.width / 10), canvas.height / 10);
-        ctx.lineTo(canvas.width / 10, canvas.height - (canvas.height / 10));
-        ctx.stroke();
-    } else {
-        ctx.beginPath();
-        drawEllipse(ctx, canvas.width /10, canvas.height /10, canvas.width - (2 * (canvas.width / 10)), canvas.height - (2 * (canvas.height / 10)));
-        ctx.stroke();
-    }
-
-
-}
-function removefaded(that) {
-    if (that.dataset.piece !== "" && !yourturn)
-        return;
-
-    let canvas = that.getElementsByClassName('cv')[0];
-
-    let ctx = canvas.getContext("2d");
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-function makemove(that) {
-    if (that.dataset.piece !== "" || !yourturn)
-        return;
-
-    let canvas = that.getElementsByClassName('cv')[0];
-
-    let ctx = canvas.getContext("2d");
-
-    ctx.lineWidth = canvas.width / 10;
-    ctx.imageSmoothingEnabled= false;
-    ctx.strokeStyle="#b7b7b7";
-
-    if (piece === 'x') {
-        ctx.beginPath();
-        ctx.moveTo(canvas.width / 10,canvas.height / 10);
-        ctx.lineTo(canvas.width - (canvas.width / 10), canvas.height - (canvas.height / 10));
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(canvas.width - (canvas.width / 10), canvas.height / 10);
-        ctx.lineTo(canvas.width / 10, canvas.height - (canvas.height / 10));
-        ctx.stroke();
-    } else {
-        ctx.beginPath();
-        drawEllipse(ctx, canvas.width /10, canvas.height /10, canvas.width - (2 * (canvas.width / 10)), canvas.height - (2 * (canvas.height / 10)));
-        ctx.stroke();
-    }
 
     socket.send(JSON.stringify({
         type: 'makeMove',
-        position: that.dataset.position
+        position: position
     }))
 
 }

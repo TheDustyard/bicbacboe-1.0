@@ -33,23 +33,9 @@
         </div>
 
 
-        <table id="board" style="display: none;">
-            <tr>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="topLeft" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="topMiddle" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="topRight" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-            </tr>
-            <tr>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="middleLeft" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="middleMiddle" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="middleRight" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-            </tr>
-            <tr>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="bottomLeft" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="bottomMiddle" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-                <td onmouseover="faded(this)" onmouseout="removefaded(this)" onclick="makemove(this)" data-position="bottomRight" data-piece=""><canvas class="cv" height="1000" width="1000"></canvas></td>
-            </tr>
-        </table>
+        <div id="board" style="display: none;">
+            <canvas id="cv" width="1000" height="1000">HTML5 not supported by your browser! Please upgrade.</canvas>
+        </div>
 
         <div id="gameinfo" style="display: none;">
             <table cellspacing=0 cellpadding=0>
