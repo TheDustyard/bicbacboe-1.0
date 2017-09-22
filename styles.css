@@ -127,7 +127,6 @@ html {
     padding: 5px;
     background-color: #c94040;
     display: none;
-    color: white;
 }
 #banned {
     width: 100%;
@@ -135,7 +134,6 @@ html {
     padding: 5px;
     background-color: #c94040;
     display: none;
-    color: white;
 }
 #fullgame {
     width: 100%;
@@ -143,7 +141,6 @@ html {
     padding: 5px;
     background-color: goldenrod;
     display: none;
-    color: white;
 }
 #invalidgame {
     width: 100%;
@@ -151,7 +148,6 @@ html {
     padding: 5px;
     background-color: goldenrod;
     display: none;
-    color: white;
 }
 #invalidname {
     width: 100%;
@@ -159,7 +155,6 @@ html {
     padding: 5px;
     background-color: goldenrod;
     display: none;
-    color: white;
 }
 
 #board {
