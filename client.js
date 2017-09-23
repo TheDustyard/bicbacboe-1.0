@@ -403,7 +403,20 @@ function drawEllipse(ctx, x, y, w, h) {
   ctx.stroke();
 }*/
 
-Canvas.render = function() {
+Canvas.render = function(deltaTime) {
+  // UPDATES
+  console.log(deltaTime);
+
+  for(let x = 0; x < 3; x++) {
+    for(let y = 0; y < 3; y++) {
+      let boardPos = Utils.effects.getBoardPos(x, y);
+      if(Canvas.mousePos.x >= (110 * x) + 10 && Canvas.mousePos.x <= (110 * x) + 110
+        && Canvas.mousePos.y >= (110 * y) + 10 && Canvas.mousePos.y <= (110 * y) + 110)
+        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, 0.5);
+      else Canvas.effectBuffer.board_mouseover[boardPos] = 0;
+    }
+   }
+  // RENDERING
   // If board is not visible, do NOT render to save CPU and GPU
   if(board.style.getPropertyValue("display") === "none") { window.requestAnimationFrame(Canvas.render); return; }
 
