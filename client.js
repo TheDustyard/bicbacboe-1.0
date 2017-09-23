@@ -403,6 +403,7 @@ Canvas.render = function() {
   if(gl) {
     // TODO: Figure out this thing
   } else if(ctx) { // To avoid any crashes
+    ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, 340, 340);
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
@@ -410,8 +411,8 @@ Canvas.render = function() {
         if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
         if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
 
-        ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"])).toString(16)
-          + (22 + Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"])).toString(16) + "00";
+        ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer.board_mouseover[boardpos])).toString(16)
+          + (22 + Math.floor(Canvas.effectBuffer.board_mouseover[boardpos])).toString(16) + "00";
         ctx.fillRect((110 * x) + 10, (110 * y) + 10, 100, 100);
       }
     }

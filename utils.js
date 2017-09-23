@@ -12,12 +12,13 @@ const $ = function() { return document.querySelector.apply(document, arguments);
 var Utils = {
   initializeCanvas: function(canvasObj, forceCtx) {
     // Prepare board mouseover effect
+    canvasObj.effectBuffer.board_mouseover = {}
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
         let boardpos = "";
         if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
         if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
-        canvasObj.effectBuffer[boardpos + "_board_mouseover"] = 0;
+        canvasObj.effectBuffer.board_mouseover[boardpos] = 0;
       }
     }
     // Set canvas to Canvas object
