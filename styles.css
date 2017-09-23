@@ -181,21 +181,9 @@ html, body {
     top: 50%;
     transform: translate(-50%, -50%);
 }
-#board tr {
-    min-height: 0px;
-    min-height: 0px;
-}
-#board tr td {
-    min-height: 0px;
-    min-height: 0px;
-    background: red;
-    padding: 0px;
-    margin: 0px;
-    border: solid black 3px;
-}
 #board canvas {
-    width: 100px;
-    height: 100px;
+    width: 340px;
+    height: 340px;
 }
 
 #X {
