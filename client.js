@@ -448,3 +448,30 @@ Canvas.render = function(deltaTime) {
   // There's going to be more stuff here :P
   window.requestAnimationFrame(Canvas.render);
 }
+
+/*
+To be fair, you have to have a very high IQ to understand :b:ic :b:ac :b:oe.
+The humor is extremely subtle, and without a solid grasp of how to play a game most of the jokes will go over a typical viewer's head.
+There's also Paul's nihilistic outlook, which is deftly woven into his characterisation
+- his personal philosophy draws heavily from Narodnaya Volya literature, for instance.
+The fans understand this stuff; they have the intellectual capacity to truly appreciate the depths of these jokes,
+to realize that they're not just funny- they say something deep about LIFE.
+As a consequence people who dislike :b:ic :b:ac :b:oe truly ARE idiots- of course they wouldn't appreciate, for instance,
+the humour in Duster's existencial catchphrase ":lock: LOCKED UNTIL RELEASE :lock:," which itself is a cryptic reference to Boney M's Russian epic Rasputin.
+I'm smirking right now just imagining one of those addlepated simpletons scratching their heads in confusion as the devs genius unfolds itself on their computer screens.
+What fools... how I pity them. :joy: And yes by the way, I DO have a :b:ic :b:ac :b:oe tattoo.
+And no, you cannot see it. It's for the ladies' eyes only-
+And even they have to demonstrate that they're within 5 IQ points of my own (preferably lower) beforehand.
+*/
+/*
+I can not begin to express how much I love :b:ic :b:ac :b:oe. I knew that I could relate to this game.
+I have a higher than normal IQ, genius level to be exact, and most other games, I just can't understand why people like them,
+or why I just claimed to be a genius and used so many fucking commas in a run-on sentence from Hell. :b:ic :b:ac :b:oe's comedy, sarcasm,
+and wittiness is so funny, not because of the actual boring content, but because I know that so many people, less smart than me, can not begin to understand what they mean.
+The characters are also hillarious. The relationship between FatalError and Paul is so deep, yet distant.
+The writers for this show really know how to set up a perfect world that only arrogant fucks who go on Discord rants can understand.
+Unfortunately, lots of people don't find this game funny, because it isn't. I just can not understand why.
+The only possibility in my mind is that they are just too dumb to comprehend the pseudo-science humor.
+This game is targeted, to awkward fucks who want to feel some kind of mainstream vindication and acceptance for their lack of social skills. It's a game that is intelligent, but at the same time shitty.
+It's a game that has such deep meaning and characters, you begin to want to live there yourself. This game is amazing, and if I could, I would give it higher. 10/10.
+*/
