@@ -450,3 +450,15 @@ What fools... how I pity them. :joy: And yes by the way, I DO have a :b:ic :b:ac
 And no, you cannot see it. It's for the ladies' eyes only-
 And even they have to demonstrate that they're within 5 IQ points of my own (preferably lower) beforehand.
 */
+/*
+I can not begin to express how much I love :b:ic :b:ac :b:oe. I knew that I could relate to this game.
+I have a higher than normal IQ, genius level to be exact, and most other games, I just can't understand why people like them,
+or why I just claimed to be a genius and used so many fucking commas in a run-on sentence from Hell. :b:ic :b:ac :b:oe's comedy, sarcasm,
+and wittiness is so funny, not because of the actual boring content, but because I know that so many people, less smart than me, can not begin to understand what they mean.
+The characters are also hillarious. The relationship between FatalError and Paul is so deep, yet distant.
+The writers for this show really know how to set up a perfect world that only arrogant fucks who go on Discord rants can understand.
+Unfortunately, lots of people don't find this game funny, because it isn't. I just can not understand why.
+The only possibility in my mind is that they are just too dumb to comprehend the pseudo-science humor.
+This game is targeted, to awkward fucks who want to feel some kind of mainstream vindication and acceptance for their lack of social skills. It's a game that is intelligent, but at the same time shitty.
+It's a game that has such deep meaning and characters, you begin to want to live there yourself. This game is amazing, and if I could, I would give it higher. 10/10.
+*/
