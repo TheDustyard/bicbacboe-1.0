@@ -1,10 +1,3 @@
-/**
- * Basically equals <b>document.querySelector</b> ¯\_(ツ)_/¯<br>
- * Small change? I THINK NOT!
- * @kind method
- */
-const $ = function() { return document.querySelector.apply(document, arguments); };
-
 var socket;
 /** Used to prevent constant querySelector usage in Canvas.render() */
 var board;
@@ -39,24 +32,10 @@ var isready = false;
 
 /** Executed when all the HTML loads */
 function login() {
-    // Prepare board mouseover effect
-    for(let x = 0; x < 3; x++) {
-      for(let y = 0; y < 3; y++) {
-        let boardpos = "";
-        if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
-        if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
-        Canvas.effectBuffer[boardpos + "_board_mouseover"] = 0;
-      }
-    }
-
     // Set board to board object
     board = $("#board");
     // Prepare our Canvas
-    Canvas.canvas = $("#cv");
-    // UNCOMMENTING THESE 2 LINES WILL ENABLE WEBGL IF YOUR BROWSER SUPPORTS IT
-    //Canvas.gl = Canvas.canvas.getContext('webgl');
-    /*if(!Canvas.gl)*/ Canvas.ctx = Canvas.canvas.getContext('2d');
-    window.requestAnimationFrame(Canvas.render);
+    Utils.initializeCanvas(Canvas, true);
 
     connecting();
 
@@ -428,7 +407,7 @@ Canvas.render = function() {
         if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
         if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
 
-        ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"))
+        ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"]))
           + (22 + Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"])).toString(16) + "00";
         ctx.fillRect((110 * x) + 10, (110 * y) + 10, 100, 100);
       }
