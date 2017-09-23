@@ -6,6 +6,8 @@
 const $ = function() { return document.querySelector.apply(document, arguments); };
 
 var socket;
+/** Used to prevent constant querySelector usage in Canvas.render() */
+var board;
 /**
  * The Canvas object that controls the board
  * @namespace
@@ -24,6 +26,7 @@ var Canvas = {
    * (Afterall, I want the line drawing and board highlighting and all that to look nice - FatalError)
    */
   effectBuffer: {}
+  // Insert glBuffer *eventually*
 };
 
 var piece;
@@ -46,8 +49,11 @@ function login() {
       }
     }
 
+    // Set board to board object
+    board = $("#board");
     // Prepare our Canvas
     Canvas.canvas = $("#cv");
+    // UNCOMMENTING THESE 2 LINES WILL ENABLE WEBGL IF YOUR BROWSER SUPPORTS IT
     //Canvas.gl = Canvas.canvas.getContext('webgl');
     /*if(!Canvas.gl)*/ Canvas.ctx = Canvas.canvas.getContext('2d');
     window.requestAnimationFrame(Canvas.render);
@@ -399,6 +405,9 @@ function drawEllipse(ctx, x, y, w, h) {
 }
 
 Canvas.render = function() {
+  // If board is not visible, do NOT render to save CPU and GPU
+  if(board.style.getPropertyValue("display") === "none") { window.requestAnimationFrame(Canvas.render); return; }
+
   // Shortcuts so we don't have to type out the entire thing every time
   let gl = Canvas.gl; let ctx = Canvas.ctx;
   // GL Preparation
@@ -410,17 +419,17 @@ Canvas.render = function() {
 
   // Board rendering
   if(gl) {
-
+    // TODO: Figure out this thing
   } else if(ctx) { // To avoid any crashes
+    ctx.fillRect(0, 0, 340, 340);
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
         let boardpos = "";
         if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
         if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
 
-        let blueColor = Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"]).toString(16);
-        if(blueColor.length === 1) blueColor = "0" + blueColor;
-        ctx.fillStyle = "#FF" + (22 + Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"])).toString(16) + blueColor;
+        ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"))
+          + (22 + Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"])).toString(16) + "00";
         ctx.fillRect((110 * x) + 10, (110 * y) + 10, 100, 100);
       }
     }

@@ -173,7 +173,6 @@ html, body {
 }
 
 #board {
-    background: black;
     position: absolute;
     font-size: 0;
     flex-wrap: nowrap;
