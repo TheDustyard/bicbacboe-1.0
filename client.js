@@ -410,7 +410,7 @@ Canvas.render = function() {
         if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
         if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
 
-        ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"]))
+        ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"])).toString(16);
           + (22 + Math.floor(Canvas.effectBuffer[boardpos + "_board_mouseover"])).toString(16) + "00";
         ctx.fillRect((110 * x) + 10, (110 * y) + 10, 100, 100);
       }
