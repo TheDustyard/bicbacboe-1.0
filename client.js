@@ -12,14 +12,31 @@ var Canvas = {
   ctx: null,
   /** The WebGL Context. Will be <b>null</b> if WebGL is off */
   gl: null,
-  /** The Canvas's render method<br>(Yes, I could've made it separate, but for JSDoc cleanliness, I added it to the object - FatalError) */
-  render: function() { window.requestAnimationFrame(Canvas.render); },
+  /**
+   * The Canvas's render method<br>(Yes, I could've made it separate, but for JSDoc cleanliness, I added it to the object - FatalError)
+   * @param {DOMHighResTimeStamp} deltaTime
+   */
+  render: function(deltaTime) { window.requestAnimationFrame(Canvas.render); },
+  /**
+   * The Canvas's click method. Usually called when it's clicked and Utils.initializeCanvas was called.
+   * @param {number} x
+   * @param {number} y
+   * @param {MouseEvent} event - The mouse click event
+   */
+  click: function(x, y, event) { console.warn("Click function uninitialized") },
   /**
    * Used for storing the states of any effects and animations<br>
    * (Afterall, I want the line drawing and board highlighting and all that to look nice - FatalError)
    */
-  effectBuffer: {}
-  // Insert glBuffer *eventually*
+  effectBuffer: {},
+  // Insert glBuffer here *eventually*
+  /**
+   * Canvas's current mouse position<br>
+   * -1 = Mouse not over canvas
+   * @param x
+   * @param y
+   */
+  mousePos: { x: -1, y: -1 }
 };
 
 var piece;
@@ -102,7 +119,7 @@ function validate() {
 }
 /** Creates a game  */
 function createGame() {
-    if (socket.readyState !== socket.OPEN) return;
+    if (!socket || socket.readyState !== socket.OPEN) return;
     if ($('#nickname').value === "" || $('#nickname').value === null) {
         nameinvalid();
         return;
@@ -139,7 +156,7 @@ function leaveGame() {
 }
 /** Attempts a reconnect */
 function reconnect() {
-    if(socket.readyState !== socket.OPEN)
+    if(!socket || socket.readyState !== socket.OPEN)
         login();
 }
 /**
@@ -366,7 +383,7 @@ function makemove(position) {
 
 }
 
-// ONLY USABLE WITH 2D CONTEXT RIGHT NOW!
+/* 2D Context already has a circle function :face_palm:
 function drawEllipse(ctx, x, y, w, h) {
   var kappa = .5522848,
       ox = (w / 2) * kappa, // control point offset horizontal
@@ -384,7 +401,7 @@ function drawEllipse(ctx, x, y, w, h) {
   ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
   //ctx.closePath(); // not used correctly, see comments (use to close off open path)
   ctx.stroke();
-}
+}*/
 
 Canvas.render = function() {
   // If board is not visible, do NOT render to save CPU and GPU
@@ -407,10 +424,7 @@ Canvas.render = function() {
     ctx.fillRect(0, 0, 340, 340);
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
-        let boardpos = "";
-        if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
-        if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
-
+        let boardpos = Utils.effects.getBoardPos(x, y);
         ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer.board_mouseover[boardpos])).toString(16)
           + (22 + Math.floor(Canvas.effectBuffer.board_mouseover[boardpos])).toString(16) + "00";
         ctx.fillRect((110 * x) + 10, (110 * y) + 10, 100, 100);
