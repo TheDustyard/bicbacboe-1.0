@@ -34,37 +34,39 @@ html {
 #nickname {
     border: none;
     outline: none;
-    border-bottom: 1px solid #4f4f4f;
+    border-bottom: 1.6px solid #4f4f4f;
     background: none;
     transition: border-bottom 1s;
-    color: white;
 }
 #nickname:focus {
-    color: white;
-    border-bottom: 1px solid black;
+    border-bottom: 1.6px solid black;
     transition: border-bottom 1s;
 }
 .gamebutton {
     color: white;
-    background-color: darkgreen;
+    background-color: #2b2b2b;
     border: none;
     border-radius: 5px;
-    padding: 16px 32px;
+    padding: 7px 15px;
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
-    transition: background-color 1s;
 }
 .gamebutton:hover {
     color: white;
-    background-color: darkolivegreen;
+    background-color: black;
     border: none;
     border-radius: 5px;
-    padding: 16px 32px;
+    padding: 7px 15px;
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
-    transition: background-color 1s;
+}
+.gamebutton {
+  transition: background-color 0.3s;
+}
+.gamebutton:hover {
+  transition: background-color 0.3s;
 }
 #topright {
     display: block;
@@ -96,9 +98,9 @@ html {
     width: 20px;
     padding-right: 5px;
     text-align: center;
-    -moz-user-select: none; 
+    -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select:none; 
+    -ms-user-select:none;
     user-select:none;
     -o-user-select:none;
 }
@@ -195,9 +197,9 @@ html {
     text-align: center;
     height: 30px;
     line-height: 30px;
-    -moz-user-select: none; 
+    -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select:none; 
+    -ms-user-select:none;
     user-select:none;
     -o-user-select:none;
     cursor: default;
@@ -208,15 +210,19 @@ html {
 }
 
 #login {
+  background-color: white;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
     width: auto;
     flex-wrap: nowrap;
     white-space: nowrap;
     align-content: center;
     text-align: center;
+    padding: 25px 25px 25px 25px;
+    border-radius: 5px;
+    box-shadow: 0 0 6px 0px black;
 }
 
 
