@@ -435,3 +435,18 @@ Canvas.render = function() {
   // There's going to be more stuff here :P
   window.requestAnimationFrame(Canvas.render);
 }
+
+/*
+To be fair, you have to have a very high IQ to understand :b:ic :b:ac :b:oe.
+The humor is extremely subtle, and without a solid grasp of how to play a game most of the jokes will go over a typical viewer's head.
+There's also Paul's nihilistic outlook, which is deftly woven into his characterisation
+- his personal philosophy draws heavily from Narodnaya Volya literature, for instance.
+The fans understand this stuff; they have the intellectual capacity to truly appreciate the depths of these jokes,
+to realize that they're not just funny- they say something deep about LIFE.
+As a consequence people who dislike :b:ic :b:ac :b:oe truly ARE idiots- of course they wouldn't appreciate, for instance,
+the humour in Duster's existencial catchphrase ":lock: LOCKED UNTIL RELEASE :lock:," which itself is a cryptic reference to Boney M's Russian epic Rasputin.
+I'm smirking right now just imagining one of those addlepated simpletons scratching their heads in confusion as the devs genius unfolds itself on their computer screens.
+What fools... how I pity them. :joy: And yes by the way, I DO have a :b:ic :b:ac :b:oe tattoo.
+And no, you cannot see it. It's for the ladies' eyes only-
+And even they have to demonstrate that they're within 5 IQ points of my own (preferably lower) beforehand.
+*/
