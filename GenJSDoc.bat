@@ -5,7 +5,10 @@ if %errorlevel%==1 (
     echo Type "npm i -g jsdoc" in an Administrator CMD to install JSDoc!
     goto end
 )
+if not exist "out/" goto generate
+echo Removing out/
 rmdir /S /Q "out/"
+:generate
 echo Generating a JSDoc
 call jsdoc client.js utils.js
 echo Finished
