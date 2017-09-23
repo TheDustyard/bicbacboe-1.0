@@ -1,79 +1,3 @@
-/*
-//CLIENT
-export type ValidateGame = {
-    type: 'validateGame',
-    ID: string
-};
-
-export type CreateGame = {
-    type: 'createGame',
-    nickname: string
-};
-
-export type Ready = {
-    type: 'ready',
-    isReady: boolean
-};
-
-export type JoinGame = {
-    type: 'joinGame',
-    gameID: string,
-    nickname: string
-};
-
-export type LeaveGame = {
-    type: 'leaveGame'
-};
-
-export type MakeMove = {
-    type: 'makeMove',
-    position: Game.Position
-}
-
-//SERVER
-export type Connected = {
-    type: 'connected',
-    user: Game.User
-};
-
-export type CreatedGame = {
-    type: 'createdGame',
-    tournamentID: string
-};
-
-export type JoinedGame = {
-    type: 'joinedGame',
-    tournamentID: string,
-    piece: Game.Piece
-};
-
-export type MatchUpdateMessage = {
-    type: 'matchUpdate',
-    board: Game.Board,
-    state: Game.State,
-    X: Game.User,
-    O: Game.User,
-    turn: Game.Piece
-};
-
-export type LeftGame = {
-    type: 'leftGame',
-    tournamentID: string
-};
-
-export type GameFull = {
-    type: 'gameFull',
-};
-
-export type GameNotFound = {
-    type: 'gameNotFound'
-};
-
-export type GameExists = {
-    type: 'gameExists'
-};
-*/
-
 /**
  * Basically equals <b>document.querySelector</b> ¯\_(ツ)_/¯<br>
  * Small change? I THINK NOT!
@@ -119,7 +43,7 @@ function login() {
                 piece = 'none';
                 leftGame();
                 break;
-            case 'matchUpdate':
+            case 'gameUpdate':
                 matchUpdate(data);
                 break;
         }
