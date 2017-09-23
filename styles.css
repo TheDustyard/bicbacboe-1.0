@@ -6,6 +6,11 @@ html, body {
     left: 0;
     right: 0;
     bottom: 0;
+    background: linear-gradient(-270deg, #515151, #111111);
+    background-size: 600% 600%;
+    -webkit-animation: animBack 30s ease infinite;
+    -moz-animation: animBack 30s ease infinite;
+    animation: animBack 30s ease infinite;
 }
 
 @-webkit-keyframes animBack {
@@ -23,6 +28,7 @@ html, body {
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
 }
+
 #login {
 	background: linear-gradient(270deg, #d6b3ee, #cd2cce, #ce2c2c);
 	background-size: 600% 600%;
@@ -34,13 +40,15 @@ html, body {
 #nickname {
     border: none;
     outline: none;
-    border-bottom: 1.6px solid #4f4f4f;
+    border-bottom: 1.6px solid white;
     background: none;
     transition: border-bottom 1s;
+    text-align: center;
 }
 #nickname:focus {
     border-bottom: 1.6px solid black;
     transition: border-bottom 1s;
+    text-align: center;
 }
 .gamebutton {
     color: white;
