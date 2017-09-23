@@ -66,6 +66,9 @@ function login() {
             case 'gameUpdate':
                 matchUpdate(data);
                 break;
+            case 'broadcast':
+                alert(`BROADCAST: ${data.message}`);
+                break;
         }
     }
     // Socket opened
