@@ -44,7 +44,7 @@ var Utils = {
       canvasObj.mousePos = { x: x, y: y };
     });
     // Mouse Leave
-    canvasObj.canvas.addEventListener('mouseleave', function(event) { canvasObj.mousePos = { x: -1, y: -1 }; });
+    canvasObj.canvas.addEventListener('mouseleave', function(event) { if(canvasObj.canvas !== document.elementFromPoint(event.clientX, event.clientY)) canvasObj.mousePos = { x: -1, y: -1 }; });
     // Mouse clickity clack
     canvasObj.canvas.addEventListener('click', function(event) {
       if(board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; };

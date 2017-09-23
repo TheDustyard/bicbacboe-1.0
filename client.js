@@ -403,10 +403,10 @@ function drawEllipse(ctx, x, y, w, h) {
   ctx.stroke();
 }*/
 
-Canvas.render = function(deltaTime) {
+let lastTime = 0;
+Canvas.render = function(time) {
+  let deltaTime = time - lastTime;
   // UPDATES
-  console.log(deltaTime);
-
   for(let x = 0; x < 3; x++) {
     for(let y = 0; y < 3; y++) {
       let boardPos = Utils.effects.getBoardPos(x, y);
