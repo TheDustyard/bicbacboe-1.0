@@ -1,237 +1,261 @@
 /*@import url('https://fonts.googleapis.com/css?family=Montserrat');*/
 
 html, body {
-/*    font-family: 'Montserrat', sans-serif;*/
-    margin: 0px;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(-270deg, #515151, #111111);
-    background-size: 600% 600%;
-    -webkit-animation: animBack 30s ease infinite;
-    -moz-animation: animBack 30s ease infinite;
-    animation: animBack 30s ease infinite;
-}
-
-@-webkit-keyframes animBack {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@-moz-keyframes animBack {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@keyframes animBack {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-
-#login {
-	background: linear-gradient(270deg, #d6b3ee, #cd2cce, #ce2c2c);
-	background-size: 600% 600%;
-	-webkit-animation: animBack 30s ease infinite;
-	-moz-animation: animBack 30s ease infinite;
-	animation: animBack 30s ease infinite;
-}
-
-#nickname {
-    border: none;
-    outline: none;
-    border-bottom: 1.6px solid white;
-    background: none;
-    transition: border-bottom 1s;
-    text-align: center;
-}
-#nickname:focus {
-    border-bottom: 1.6px solid black;
-    transition: border-bottom 1s;
-    text-align: center;
-}
-.gamebutton {
-    color: white;
-    background-color: #2b2b2b;
-    border: none;
-    border-radius: 5px;
-    padding: 7px 15px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-.gamebutton:hover {
-    color: white;
-    background-color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 7px 15px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-.gamebutton {
-  transition: background-color 0.3s;
-}
-.gamebutton:hover {
-  transition: background-color 0.3s;
-}
-#topright {
-    display: block;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    padding: 10px;
-    background-color: darkgray;
-}
-#topright input {
-    background-color: darkgray;
-    border: none;
-    border-bottom: solid black 1px;
-}
-
-#info {
-    margin: 0px;
-    padding: 10px;
-}
-#info img {
-    vertical-align: middle;
-    padding: 0px 5px 0px 0px;
-}
-
-#sharelink {
-    width: calc((100% - 10px) - 25px)
-}
-#dropbtn {
-    width: 20px;
-    padding-right: 5px;
-    text-align: center;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select:none;
-    user-select:none;
-    -o-user-select:none;
-}
-
-.dropdown {
-    transition: all 1s;
-}
-.dropdown.down {
-    height: 100%;
-    display: block;
-    transition: height 1s;
-}
-.dropdown {
-    height: 0%;
-    display: none;
-    transition: height 1s;
-}
-
-#connecting {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: gold;
-    display: none;
-}
-#disconnected {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: #c94040;
-    display: none;
-}
-#banned {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: #c94040;
-    display: none;
-}
-#fullgame {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: goldenrod;
-    display: none;
-}
-#invalidgame {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: goldenrod;
-    display: none;
-}
-#invalidname {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background-color: goldenrod;
-    display: none;
-}
-
-#board {
-    position: absolute;
-    font-size: 0;
-    flex-wrap: nowrap;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-#board canvas {
-    width: 340px;
-    height: 340px;
-}
-
-#X {
-    background: red;
-    padding: 5px;
-    display: inline;
-    font-weight: bold;
-    font-size: 30px;
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select:none;
-    user-select:none;
-    -o-user-select:none;
-    cursor: default;
-    border: solid black 2px;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-}
-
-#login {
-  background-color: white;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: auto;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    align-content: center;
-    text-align: center;
-    padding: 25px 25px 25px 25px;
-    border-radius: 5px;
-    box-shadow: 0 0 6px 0px black;
-}
-
-
-.ready {
-    background-color: green;
-}
-
-.notready {
-    background-color: red;
-}
-
-#xname, #oname {
-    padding: 5px 10px;
-}
+    /*    font-family: 'Montserrat', sans-serif;*/
+        margin: 0px;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(-270deg, #515151, #111111);
+        background-size: 600% 600%;
+        -webkit-animation: animBack 30s ease infinite;
+        -moz-animation: animBack 30s ease infinite;
+        animation: animBack 30s ease infinite;
+    }
+    
+    @-webkit-keyframes animBack {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+    @-moz-keyframes animBack {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+    @keyframes animBack {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+    
+    #login {
+        background: linear-gradient(270deg, #d6b3ee, #cd2cce, #ce2c2c);
+        background-size: 600% 600%;
+        -webkit-animation: animBack 30s ease infinite;
+        -moz-animation: animBack 30s ease infinite;
+        animation: animBack 30s ease infinite;
+    }
+    
+    #nickname {
+        border: none;
+        outline: none;
+        border-bottom: 1.6px solid white;
+        background: none;
+        transition: border-bottom 1s;
+        text-align: center;
+    }
+    #nickname:focus {
+        border-bottom: 1.6px solid black;
+        transition: border-bottom 1s;
+        text-align: center;
+    }
+    .gamebutton {
+        color: white;
+        background-color: #2b2b2b;
+        border: none;
+        border-radius: 5px;
+        padding: 7px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .gamebutton:hover {
+        color: white;
+        background-color: black;
+        border: none;
+        border-radius: 5px;
+        padding: 7px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    #topright {
+        display: block;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding: 10px;
+        background-color: darkgray;
+    }
+    #topright input {
+        background-color: darkgray;
+        border: none;
+        border-bottom: solid black 1px;
+    }
+    
+    #info {
+        margin: 0px;
+        padding: 10px;
+    }
+    #info img {
+        vertical-align: middle;
+        padding: 0px 5px 0px 0px;
+    }
+    
+    #sharelink {
+        width: calc((100% - 10px) - 25px)
+    }
+    #dropbtn {
+        width: 20px;
+        padding-right: 5px;
+        text-align: center;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+        -o-user-select:none;
+    }
+    
+    .dropdown {
+        transition: all 1s;
+    }
+    .dropdown.down {
+        height: 100%;
+        display: block;
+        transition: height 1s;
+    }
+    .dropdown {
+        height: 0%;
+        display: none;
+        transition: height 1s;
+    }
+    
+    #connecting {
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        background-color: gold;
+        display: none;
+    }
+    #disconnected {
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        background-color: #c94040;
+        display: none;
+    }
+    #banned {
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        background-color: #c94040;
+        display: none;
+    }
+    #fullgame {
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        background-color: goldenrod;
+        display: none;
+    }
+    #invalidgame {
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        background-color: goldenrod;
+        display: none;
+    }
+    #invalidname {
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        background-color: goldenrod;
+        display: none;
+    }
+    
+    #board {
+        position: absolute;
+        font-size: 0;
+        flex-wrap: nowrap;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    #board canvas {
+        width: 340px;
+        height: 340px;
+    }
+    
+    #X {
+        background: #2b2b2b;
+        color: white;
+        padding: 5px 10px;
+        font: 35px Arial, "sans-serif";
+        cursor: pointer;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        border-radius: 5px;
+        border: 2px solid white;
+        box-shadow: 0 0 10px 3px black;
+        transition: background-color 0.3s;
+        user-select: none;
+    }
+    
+    #X:hover {
+        background: #CE0000
+    }
+    
+    #login {
+        background-color: white;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: auto;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        align-content: center;
+        text-align: center;
+        padding: 25px 25px 25px 25px;
+        border-radius: 5px;
+        box-shadow: 0 0 6px 0px black;
+    }
+    
+    
+    .ready {
+        background-color: green;
+    }
+    
+    .notready {
+        background-color: red;
+    }
+    
+    #xname, #oname {
+        padding: 5px 10px;
+    }
+    
+    #toggleAnim {
+        background: #CE0000;
+        color: white;
+        padding: 5px 10px;
+        display: inline;
+        font: 25px Arial, "sans-serif";
+        cursor: pointer;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        border-radius: 5px;
+        box-shadow: 0 0 7px 2px black;
+        transition: background-color 0.3s;
+        border: 2px solid white;
+        user-select: none;
+    }
+    #toggleAnim_:checked + #toggleAnim {
+        background: #00af00
+    }
+    #toggleAnim:hover {
+        background: #880000
+    }
+    #toggleAnim_:checked + #toggleAnim:hover {
+        background: #006e00
+    }
+    #toggleAnim_ {
+        display: none;
+    }

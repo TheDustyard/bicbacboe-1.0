@@ -192,6 +192,21 @@ function connecting() {
     $('#status').src = "https://img.shields.io/badge/Connection%20Status-Connecting...-yellow.svg?style=flat-square";
     $('#reconnect').setAttribute('disabled', true); // Disables the reconnect button?
 }
+
+// toggles background animation
+function toggleAnim() {
+    checkbox = $('#toggleAnim_');
+    body = $('body').style;
+    if (checkbox.checked === false) {
+        body.background = "rgb(17, 17, 17)";
+        body.animationPlayState = "paused";
+    } else {
+        body.background = "linear-gradient(-270deg, #515151, #111111)";
+        body.backgroundSize = "600% 600%";
+        body.animationPlayState = "running";
+    }
+}
+
 /**
  * Disconnects you from the game and returns you back to the main screen
  * @memberof Visuals
