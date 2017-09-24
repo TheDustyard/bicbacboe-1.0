@@ -15,7 +15,7 @@ html, body {
         -moz-animation: animBack 30s ease infinite;
         animation: animBack 30s ease infinite;
     }
-    
+
     @-webkit-keyframes animBack {
         0%{background-position:0% 50%}
         50%{background-position:100% 50%}
@@ -31,7 +31,7 @@ html, body {
         50%{background-position:100% 50%}
         100%{background-position:0% 50%}
     }
-    
+
     #login {
         background: linear-gradient(270deg, #d6b3ee, #cd2cce, #ce2c2c);
         background-size: 600% 600%;
@@ -39,7 +39,7 @@ html, body {
         -moz-animation: animBack 30s ease infinite;
         animation: animBack 30s ease infinite;
     }
-    
+
     #nickname {
         border: none;
         outline: none;
@@ -88,7 +88,7 @@ html, body {
         border: none;
         border-bottom: solid black 1px;
     }
-    
+
     #info {
         margin: 0px;
         padding: 10px;
@@ -97,7 +97,7 @@ html, body {
         vertical-align: middle;
         padding: 0px 5px 0px 0px;
     }
-    
+
     #sharelink {
         width: calc((100% - 10px) - 25px)
     }
@@ -111,7 +111,7 @@ html, body {
         user-select:none;
         -o-user-select:none;
     }
-    
+
     .dropdown {
         transition: all 1s;
     }
@@ -125,7 +125,7 @@ html, body {
         display: none;
         transition: height 1s;
     }
-    
+
     #connecting {
         width: 100%;
         text-align: center;
@@ -168,7 +168,7 @@ html, body {
         background-color: goldenrod;
         display: none;
     }
-    
+
     #board {
         position: absolute;
         font-size: 0;
@@ -178,10 +178,10 @@ html, body {
         transform: translate(-50%, -50%);
     }
     #board canvas {
-        width: 340px;
-        height: 340px;
+        width: 360px;
+        height: 360px;
     }
-    
+
     #X {
         background: #2b2b2b;
         color: white;
@@ -197,11 +197,11 @@ html, body {
         transition: background-color 0.3s;
         user-select: none;
     }
-    
+
     #X:hover {
         background: #CE0000
     }
-    
+
     #login {
         background-color: white;
         position: absolute;
@@ -217,20 +217,20 @@ html, body {
         border-radius: 5px;
         box-shadow: 0 0 6px 0px black;
     }
-    
-    
+
+
     .ready {
         background-color: green;
     }
-    
+
     .notready {
         background-color: red;
     }
-    
+
     #xname, #oname {
         padding: 5px 10px;
     }
-    
+
     #toggleAnim {
         background: #CE0000;
         color: white;
