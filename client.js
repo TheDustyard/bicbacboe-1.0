@@ -389,10 +389,12 @@ Canvas.render = function(time) {
   for(let x = 0; x < 3; x++) {
     for(let y = 0; y < 3; y++) {
       let boardPos = Utils.effects.getBoardPos(x, y);
+      // If the mouse is above a square
       if(Canvas.mousePos.x >= (115 * x) + 15 && Canvas.mousePos.x <= (115 * x) + 115
         && Canvas.mousePos.y >= (115 * y) + 15 && Canvas.mousePos.y <= (115 * y) + 115)
-        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, 0.5);
-      else Canvas.effectBuffer.board_mouseover[boardPos] = 0;
+        // Interpolate the current buffer to 230
+        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, 0.2);
+      else Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 0, 0.2);; // Reset to 0
     }
    }
   // RENDERING
@@ -404,7 +406,7 @@ Canvas.render = function(time) {
   // GL Preparation
   if(gl) {
     gl.viewport(0, 0, 360, 360);
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
   }
 
@@ -413,14 +415,17 @@ Canvas.render = function(time) {
     // TODO: Figure out this thing
   } else if(ctx) { // To avoid any crashes
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, 360, 360);
+    ctx.fillRect(0, 0, 360, 360); // Background
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
         let boardpos = Utils.effects.getBoardPos(x, y);
+        // Retrieve color from the effect buffer using the board position
         let color = Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]).toString(16);
+        // If the color is a 1 length hex, make it a 2 length hex (0x5 = 0x05)
         if(color.length === 1) color = "0" + color;
+        // If it isn't your turn or the position already has a piece, show a red color (Cause #RGB)
         if(turn !== piece || piecePlacements[boardpos] !== " ") ctx.fillStyle = "#" + color + "0000";
-        else ctx.fillStyle = "#00" + color + "00";
+        else ctx.fillStyle = "#00" + color + "00"; // Otherwise, green!
         ctx.fillRect((115 * x) + 15, (115 * y) + 15, 100, 100);
       }
     }
@@ -443,9 +448,7 @@ Canvas.render = function(time) {
           ctx.moveTo(x * 115 + 100, y * 115 + 30);
           ctx.lineTo(x * 115 + 30, y * 115 + 100);
           ctx.stroke();
-        } else if(piecePlacements[boardPos] === "o") {
-          Utils.effects.ctxDrawEllipse(ctx, x * 115 + 30, y * 115 + 30, 70, 70);
-        }
+        } else if(piecePlacements[boardPos] === "o") Utils.effects.ctxDrawEllipse(ctx, x * 115 + 30, y * 115 + 30, 70, 70);
       }
     }
   }

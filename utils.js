@@ -81,19 +81,8 @@ var Utils = {
      * @kind method
      */
     lerp: function(a, b, x) {
-      return a * (1 - (x / 3)) + b * (x / 3);
-    },
-    /**
-     * Linear interpolation function inversed (goes slow then gets fast), returns a number between <b>a</b> and <b>b</b> by <b>-x</b>
-     * @param {number} a - Initial number
-     * @param {number} b - Number to interpolate to
-     * @param {number} x - Percentage to interpolate by, between 0 and 1
-     * @returns {number} A number between <b>a</b> and <b>b</b> depending on <b>x</b>
-     * @kind method
-     * @deprecated Doesn't work properly :/
-     */
-    inverseLerp: function(a, b, x) {
-      return b * (1 + x) + a * (-x);
+      //return a * (1 - (x / 3)) + b * (x / 3); // Inaccurate
+      return a * (1 - x) + b * x;
     }
   },
   /**
