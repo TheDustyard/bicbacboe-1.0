@@ -475,3 +475,12 @@ The only possibility in my mind is that they are just too dumb to comprehend the
 This game is targeted, to awkward fucks who want to feel some kind of mainstream vindication and acceptance for their lack of social skills. It's a game that is intelligent, but at the same time shitty.
 It's a game that has such deep meaning and characters, you begin to want to live there yourself. This game is amazing, and if I could, I would give it higher. 10/10.
 */
+/*
+You want to know why I love :b:ic :b:ac :b:oe? :b:ic :b:ac :b:oe is a completely self-made game.
+So many other games are based in nostalgic childrens shows, funny faces, relatable situations, or references. Not :b:ic :b:ac :b:oe. :b:ic :b:ac :b:oe is completely absurd.
+It's an online version of tic tac toe, and with the Ts switched out for :b:s. The first person to ever upvote :b:ic :b:ac :b:oe did not do so out of recognition.
+The first person to ever upvote :b:ic :b:ac :b:oe did not do so because of a pre-existing game format.
+The first person to ever upvote :b:ic :b:ac :b:oe upvoted a game literally pulled from the ether by sheer human creativity and willpower.
+:b:ic :b:ac :b:oe is evidence that humans can stare into the meaningless void of eternity and force their own meaning onto to it. I will always upvote :b:ic :b:ac :b:oe,
+:lock: LOCKED UNTIL RELEASE :lock:!
+*/
