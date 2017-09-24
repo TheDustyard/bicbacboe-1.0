@@ -182,8 +182,8 @@ html, body {
     transform: translate(-50%, -50%);
 }
 #board canvas {
-    width: 340px;
-    height: 340px;
+    width: 360px;
+    height: 360px;
 }
 
 #X {

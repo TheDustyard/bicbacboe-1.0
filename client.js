@@ -410,8 +410,8 @@ Canvas.render = function(time) {
   for(let x = 0; x < 3; x++) {
     for(let y = 0; y < 3; y++) {
       let boardPos = Utils.effects.getBoardPos(x, y);
-      if(Canvas.mousePos.x >= (110 * x) + 10 && Canvas.mousePos.x <= (110 * x) + 110
-        && Canvas.mousePos.y >= (110 * y) + 10 && Canvas.mousePos.y <= (110 * y) + 110)
+      if(Canvas.mousePos.x >= (115 * x) + 15 && Canvas.mousePos.x <= (115 * x) + 115
+        && Canvas.mousePos.y >= (115 * y) + 15 && Canvas.mousePos.y <= (115 * y) + 115)
         Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, 0.5);
       else Canvas.effectBuffer.board_mouseover[boardPos] = 0;
     }
@@ -433,14 +433,15 @@ Canvas.render = function(time) {
   if(gl) {
     // TODO: Figure out this thing
   } else if(ctx) { // To avoid any crashes
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, 340, 340);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, 360, 360);
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
         let boardpos = Utils.effects.getBoardPos(x, y);
-        ctx.fillStyle = "#" + (255 - Math.floor(Canvas.effectBuffer.board_mouseover[boardpos])).toString(16)
-          + (22 + Math.floor(Canvas.effectBuffer.board_mouseover[boardpos])).toString(16) + "00";
-        ctx.fillRect((110 * x) + 10, (110 * y) + 10, 100, 100);
+        let color = Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]).toString(16);
+        if(color.length === 1) color = "0" + color;
+        ctx.fillStyle = "#" + color + "0000";
+        ctx.fillRect((115 * x) + 15, (115 * y) + 15, 100, 100);
       }
     }
   }
