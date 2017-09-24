@@ -36,7 +36,7 @@ var Utils = {
     // Mouse Move event on Canvas
     canvasObj.canvas.addEventListener('mousemove', function(event) {
       // If board isn't visible, set X and Y to -1
-      if(board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; }
+      if(board.style && board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; }
       // Canvas bounding box
       let rect = canvasObj.canvas.getBoundingClientRect();
       // Our coordinates
@@ -49,7 +49,7 @@ var Utils = {
     canvasObj.canvas.addEventListener('mouseleave', function(event) { if(canvasObj.canvas !== document.elementFromPoint(event.clientX, event.clientY)) canvasObj.mousePos = { x: -1, y: -1 }; });
     // Mouse clickity clack
     canvasObj.canvas.addEventListener('click', function(event) {
-      if(board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; };
+      if(board.style && board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; };
       // Canvas bounding box
       let rect = canvasObj.canvas.getBoundingClientRect();
       // Our coordinates

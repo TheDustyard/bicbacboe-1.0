@@ -61,7 +61,8 @@ function login() {
     // When we receive a socket message
     socket.onmessage = (event) => {
         let data = JSON.parse(event.data);
-        console.log('WS Message: ', data);
+        console.log('WS Message:', data);
+        console.log('Raw:', event.data);
         switch (data.type) {
             case "joinedGame":
                 window.location.hash = data.tournamentID;
@@ -153,7 +154,7 @@ function leaveGame() {
     }));
     // RESET ALL THE THINGS
     piece = undefined;
-    yourturn = false;
+    turn = " ";
     gamestate = undefined;
     gameplaying = false;
 
@@ -344,6 +345,7 @@ function matchUpdate(data) {
     turn = data.turn;
     gamestate = data.state;
     gameplaying = data.state === 'playing';
+    piecePlacements = data.board;
 
     // Set the names in the top left
     $('#xman').innerHTML = pieces.X ? pieces.X : 'None';
@@ -386,13 +388,30 @@ function dropdown(search, that) {
     }
 }
 
-function makemove(position) {
-    if (turn !== piece)
+Canvas.click = function(x, y, event) {
+  if(event.button !== 0) return;
+  console.log("CLICK!\nX: " + x + ", Y: " + y);
+  for(let sx = 0; sx < 3; sx++) {
+    for(let sy = 0; sy < 3; sy++) {
+      if(x >= (115 * sx) + 15 && x <= (115 * sx) + 115 && y >= (115 * sy) + 15 && y <= (115 * sy) + 115) {
+        console.log("Square clicked: " + sx + ", " + sy);
+        makemove(sx, sy);
+      }
+    }
+  }
+}
+
+function makemove(x, y) {
+    let boardPos = Utils.effects.getBoardPos(x, y);
+    if (turn !== piece || piecePlacements[boardPos] !== " ")
         return;
+
+    piecePlacements[boardPos] = piece;
+    turn = " ";
 
     socket.send(JSON.stringify({
         type: 'makeMove',
-        position: position
+        position: boardPos
     }))
 
 }
@@ -414,7 +433,7 @@ Canvas.render = function(time) {
    }
   // RENDERING
   // If board is not visible, do NOT render to save CPU and GPU
-  if(board.style.getPropertyValue("display") === "none") { window.requestAnimationFrame(Canvas.render); return; }
+  if(board.style && board.style.getPropertyValue("display") === "none") { window.requestAnimationFrame(Canvas.render); return; }
 
   // Shortcuts so we don't have to type out the entire thing every time
   let gl = Canvas.gl; let ctx = Canvas.ctx;
