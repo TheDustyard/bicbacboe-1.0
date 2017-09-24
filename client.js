@@ -41,6 +41,7 @@ var Canvas = {
 
 var piece;
 var pieces = {X: "None", O: "None"};
+var piecePlacements = {};
 var turn;
 
 var gamestate;
@@ -65,6 +66,9 @@ function login() {
             case "joinedGame":
                 window.location.hash = data.tournamentID;
                 piece = data.piece;
+                for(x = 0; x < 3; x++)
+                  for(y = 0; y < 3; y++)
+                    piecePlacements[Utils.effects.getBoardPos(x, y)] = " ";
                 joinedGame();
                 break;
             case 'gameNotFound':
@@ -297,14 +301,9 @@ function joinedGame() {
     $('#X').style.display = "block"; // Shows the Quit button
     $('#gameinfo').style.display = "block";
     // Reset board mouseover effect
-    for(let x = 0; x < 3; x++) {
-      for(let y = 0; y < 3; y++) {
-        let boardpos = "";
-        if(y === 0) boardpos += "t"; else if(y === 2) boardpos += "b";
-        if(x === 0) boardpos += "l"; else if(x === 1) boardpos += "m"; else if(x === 2) boardpos += "r";
-        Canvas.effectBuffer[boardpos + "_board_mouseover"] = 0;
-      }
-    }
+    for(let x = 0; x < 3; x++)
+      for(let y = 0; y < 3; y++)
+        Canvas.effectBuffer.board_mouseover[Utils.effects.getBoardPos(x, y)] = 0;
 }
 /**
  * Shows an invalid name error
@@ -373,7 +372,7 @@ function dropdown(search, that) {
 }
 
 function makemove(position) {
-    if (!yourturn)
+    if (turn !== piece)
         return;
 
     socket.send(JSON.stringify({
@@ -382,26 +381,6 @@ function makemove(position) {
     }))
 
 }
-
-/* 2D Context already has a circle function :face_palm:
-function drawEllipse(ctx, x, y, w, h) {
-  var kappa = .5522848,
-      ox = (w / 2) * kappa, // control point offset horizontal
-      oy = (h / 2) * kappa, // control point offset vertical
-      xe = x + w,           // x-end
-      ye = y + h,           // y-end
-      xm = x + w / 2,       // x-middle
-      ym = y + h / 2;       // y-middle
-
-  ctx.beginPath();
-  ctx.moveTo(x, ym);
-  ctx.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
-  ctx.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
-  ctx.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
-  ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
-  //ctx.closePath(); // not used correctly, see comments (use to close off open path)
-  ctx.stroke();
-}*/
 
 let lastTime = 0;
 Canvas.render = function(time) {
@@ -440,8 +419,33 @@ Canvas.render = function(time) {
         let boardpos = Utils.effects.getBoardPos(x, y);
         let color = Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]).toString(16);
         if(color.length === 1) color = "0" + color;
-        ctx.fillStyle = "#" + color + "0000";
+        if(turn !== piece || piecePlacements[boardpos] !== " ") ctx.fillStyle = "#" + color + "0000";
+        else ctx.fillStyle = "#00" + color + "00";
         ctx.fillRect((115 * x) + 15, (115 * y) + 15, 100, 100);
+      }
+    }
+  }
+
+  // Piece rendering
+  if(ctx) {
+    ctx.strokeStyle = "#FFFFFF";
+    for(let x = 0; x < 3; x++) {
+      for(let y = 0; y < 3; y++) {
+        let boardPos = Utils.effects.getBoardPos(x, y);
+        if(piecePlacements[boardPos] === "x") {
+          // Top left to bottom right
+          ctx.beginPath();
+          ctx.moveTo(x * 115 + 30, y * 115 + 30);
+          ctx.lineTo(x * 115 + 100, y * 115 + 100);
+          ctx.stroke();
+          // Top right to bottom left
+          ctx.beginPath();
+          ctx.moveTo(x * 115 + 100, y * 115 + 30);
+          ctx.lineTo(x * 115 + 30, y * 115 + 100);
+          ctx.stroke();
+        } else if(piecePlacements[boardPos] === "o") {
+          Utils.effects.ctxDrawEllipse(ctx, x * 115 + 30, y * 115 + 30, 70, 70);
+        }
       }
     }
   }
