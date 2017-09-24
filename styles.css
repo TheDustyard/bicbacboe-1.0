@@ -180,6 +180,10 @@ html, body {
     #board canvas {
         width: 360px;
         height: 360px;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
     }
 
     #X {
