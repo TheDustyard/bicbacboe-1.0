@@ -17,10 +17,6 @@
         <div id="invalidname">Invalid name</div>
 
         <div onclick="leaveGame()" id="X" style="display: none;">Quit</div>
-        <label>
-            <input type="checkbox" id="toggleAnim_">
-            <div onclick="toggleAnim()" id="toggleAnim">Disable Background Animation</div>
-        </label>
         <div id="login">
           <img width=200px src="./logo.PNG" style="border-radius:5px;box-shadow: 0 0 4px black;">
           <br>
@@ -70,6 +66,14 @@
                     </td>
                     <td  class="row2">
                         <button onclick='reconnect()' disabled id="reconnect">Reconnect</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>
+                            <input type="checkbox" id="toggleAnim_">
+                            <div onclick="toggleAnim()" id="toggleAnim">Toggle Background Animation</div>
+                        </label>
                     </td>
                 </tr>
             </table>
