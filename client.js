@@ -429,7 +429,7 @@ Canvas.click = function(x, y, event) {
 
 function makemove(x, y) {
     let boardPos = Utils.effects.getBoardPos(x, y);
-    if (turn !== piece || piecePlacements[boardPos] !== " ")
+    if (turn !== piece || piecePlacements[boardPos] !== " " || !gameplaying)
         return;
 
     piecePlacements[boardPos] = piece;
@@ -451,11 +451,17 @@ Canvas.render = function(time) {
     for(let y = 0; y < 3; y++) {
       let boardPos = Utils.effects.getBoardPos(x, y);
       // If the mouse is above a square
+      let interpolationVal =  (0.2 / fps60) * deltaTime;
+      if(interpolationVal > 0.95) interpolationVal = 0.95;
+      else if(interpolationVal < 0) interpolationVal = 0;
       if(Canvas.mousePos.x >= (115 * x) + 15 && Canvas.mousePos.x <= (115 * x) + 115
         && Canvas.mousePos.y >= (115 * y) + 15 && Canvas.mousePos.y <= (115 * y) + 115)
         // Interpolate the current buffer to 230
-        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, (0.2 / fps60) * deltaTime);
-      else Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 0, (0.2 / fps60) * deltaTime);; // Reset to 0
+        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, interpolationVal);
+      else { // Reset to 0
+        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 0, interpolationVal);
+        if(Canvas.effectBuffer.board_mouseover[boardPos] < 0) Canvas.effectBuffer.board_mouseover[boardPos] = 0;
+      }
     }
    }
   // RENDERING
@@ -485,7 +491,7 @@ Canvas.render = function(time) {
         // If the color is a 1 length hex, make it a 2 length hex (0x5 = 0x05)
         if(color.length === 1) color = "0" + color;
         // If it isn't your turn or the position already has a piece, show a red color (Cause #RGB)
-        if(turn !== piece || piecePlacements[boardpos] !== " ") ctx.fillStyle = "#" + color + "0000";
+        if(turn !== piece || piecePlacements[boardpos] !== " " || !gameplaying) ctx.fillStyle = "#" + color + "0000";
         else ctx.fillStyle = "#00" + color + "00"; // Otherwise, green!
         ctx.fillRect((115 * x) + 15, (115 * y) + 15, 100, 100);
       }
