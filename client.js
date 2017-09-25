@@ -50,6 +50,7 @@ var turn;
 var gamestate;
 var gameplaying = false;
 var isready = false;
+var reset = false;
 
 /** Executed when all the HTML loads */
 function login() {
@@ -175,6 +176,16 @@ function ready(isready) {
     socket.send(JSON.stringify({
         type: 'ready',
         isReady: isready
+    }));
+}
+/**
+ * Changes the reset state
+ * @param {boolean} isready - Ready state
+ */
+function togglereset(reset) {
+    socket.send(JSON.stringify({
+        type: 'reset',
+        toggled: reset
     }));
 }
 //function toggleready() { isready = !isready; ready(isready); } // Not necessary cause onclick does have full JS support (Check #toggleready in index.html)
@@ -355,16 +366,22 @@ function matchUpdate(data) {
     $('#oman').innerHTML = pieces.O ? pieces.O : 'None';
 
     // Check if X side is ready (I think)
-    if (data.X)
+    if (data.X) {
         $('#xname').className = data.X.ready ? "ready" : "notready";
-    else
+        $('#xreset').style.display = data.X.reset ? "block" : "none";
+    } else {
         $('#xname').className = "notready";
+        $('#xreset').style.display = "none";
+    }
 
     // Check if O side is ready (I thonk)
-    if (data.O)
+    if (data.O) {
         $('#oname').className = data.O.ready ? "ready" : "notready";
-    else
+        $('#oreset').style.display = data.O.reset ? "block" : "none";
+    } else {
         $('#oname').className = "notready";
+        $('#oreset').style.display = "none";
+    }
 
     if (this.gameplaying === true) {
         $('#toggleready').style.display = "none";

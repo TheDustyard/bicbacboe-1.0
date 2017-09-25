@@ -38,15 +38,22 @@
                     <td class="notready" id="xname">
                         X: <span id="xman">None</span>
                     </td>
+                    <td class="notready" id="xreset">
+                        ↻
+                    </td>
                 </tr>
                 <tr>
                     <td class="notready" id="oname">
                         O: <span id="oman">None</span>
                     </td>
+                    <td class="notready" id="oreset">
+                        ↻
+                    </td>
                 </tr>
             </table>
             <div id="turndude">Turn: <span id="turnman">Game not started</span></div>
             <button onclick="isready = !isready; ready(isready);" id="toggleready">toggle ready</button>
+            <button onclick="reset = !reset; togglereset(reset);" id="togglereset">toggle reset</button>
         </div>
 
         <div id="topright">
