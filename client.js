@@ -26,7 +26,15 @@ var Canvas = {
    * @param {number} y
    * @param {MouseEvent} event - The mouse click event
    */
-  click: function(x, y, event) { console.warn("Click function uninitialized") },
+  click: function(x, y, event) { console.warn("Click function uninitialized"); },
+  /**
+   * The Canvas's touch method. Called when it's touched and Utils.initializeCanvas was called.<br>Lets touch events process as clicks if the method returns false.
+   * @param {number} x
+   * @param {number} y
+   * @param {string} type - Either TAP or UNKNOWN
+   * @param {TouchEvent} event - The touch event
+   */
+  touch: function(x, y, type, event) { console.warn("Touch function uninitialized"); return false; },
   /**
    * Used for storing the states of any effects and animations<br>
    * (Afterall, I want the line drawing and board highlighting and all that to look nice - FatalError)
@@ -34,10 +42,8 @@ var Canvas = {
   effectBuffer: {},
   // Insert glBuffer here *eventually*
   /**
-   * Canvas's current mouse position<br>
+   * Canvas's current mouse X and Y position<br>
    * -1 = Mouse not over canvas
-   * @param x
-   * @param y
    */
   mousePos: { x: -1, y: -1 }
 };
@@ -50,6 +56,7 @@ var turn;
 var gamestate;
 var gameplaying = false;
 var isready = false;
+var reset = false;
 
 /** Executed when all the HTML loads */
 function login() {
@@ -175,6 +182,16 @@ function ready(isready) {
     socket.send(JSON.stringify({
         type: 'ready',
         isReady: isready
+    }));
+}
+/**
+ * Changes the reset state
+ * @param {boolean} isready - Ready state
+ */
+function togglereset(reset) {
+    socket.send(JSON.stringify({
+        type: 'reset',
+        toggled: reset
     }));
 }
 //function toggleready() { isready = !isready; ready(isready); } // Not necessary cause onclick does have full JS support (Check #toggleready in index.html)
@@ -355,16 +372,22 @@ function matchUpdate(data) {
     $('#oman').innerHTML = pieces.O ? pieces.O : 'None';
 
     // Check if X side is ready (I think)
-    if (data.X)
+    if (data.X) {
         $('#xname').className = data.X.ready ? "ready" : "notready";
-    else
+        $('#xreset').style.display = data.X.reset ? "block" : "none";
+    } else {
         $('#xname').className = "notready";
+        $('#xreset').style.display = "none";
+    }
 
     // Check if O side is ready (I thonk)
-    if (data.O)
+    if (data.O) {
         $('#oname').className = data.O.ready ? "ready" : "notready";
-    else
+        $('#oreset').style.display = data.O.reset ? "block" : "none";
+    } else {
         $('#oname').className = "notready";
+        $('#oreset').style.display = "none";
+    }
 
     if (this.gameplaying === true) {
         $('#toggleready').style.display = "none";

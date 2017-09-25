@@ -60,36 +60,53 @@ var Utils = {
 
     if(canvasObj.ctx) canvasObj.ctx.lineWidth = 15;
 
-    // Mouse Move event on Canvas
-    canvasObj.canvas.addEventListener('mousemove', function(event) {
-      // If board isn't visible, set X and Y to -1
-      if(board.style && board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; }
-      // Canvas bounding box
-      let rect = canvasObj.canvas.getBoundingClientRect();
-      // Our coordinates
-      let x = Math.floor((event.clientX - rect.left) / (rect.right - rect.left) * canvasObj.canvas.width);
-      let y = Math.floor((event.clientY - rect.top) / (rect.bottom - rect.top) * canvasObj.canvas.height);
-      // Finally, set the coordinates in the object
-      canvasObj.mousePos = { x: x, y: y };
-    });
-    // Mouse Leave
-    canvasObj.canvas.addEventListener('mouseleave', function(event) { if(canvasObj.canvas !== document.elementFromPoint(event.clientX, event.clientY)) canvasObj.mousePos = { x: -1, y: -1 }; });
-    // Mouse clickity clack
-    canvasObj.canvas.addEventListener('click', function(event) {
-      if(board.style && board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; };
-      // Canvas bounding box
-      let rect = canvasObj.canvas.getBoundingClientRect();
-      // Our coordinates
-      let x = Math.floor((event.clientX - rect.left) / (rect.right - rect.left) * canvasObj.canvas.width);
-      let y = Math.floor((event.clientY - rect.top) / (rect.bottom - rect.top) * canvasObj.canvas.height);
-      // If the X or Y coordinates are not on the canvas, set them to -1
-      if(x < 0 || x > 340) x = -1;
-      if(y < 0 || y > 340) y = -1;
-      // Set the coordinates in the object
-      canvasObj.mousePos = { x: x, y: y };
-      // If no coordinates are -1, send a click event
-      if(x !== -1 && y !== -1) canvasObj.click(x, y, event);
-    });
+    // MOUSE EVENTS
+    (function() {
+      // Mouse Move event on Canvas
+      canvasObj.canvas.addEventListener('mousemove', function(event) {
+        // If board isn't visible, set X and Y to -1
+        if(board.style && board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; }
+        // Canvas bounding box
+        let rect = canvasObj.canvas.getBoundingClientRect();
+        // Our coordinates
+        let x = Math.floor((event.clientX - rect.left) / (rect.right - rect.left) * canvasObj.canvas.width);
+        let y = Math.floor((event.clientY - rect.top) / (rect.bottom - rect.top) * canvasObj.canvas.height);
+        // Finally, set the coordinates in the object
+        canvasObj.mousePos = { x: x, y: y };
+      });
+      // Mouse Leave
+      canvasObj.canvas.addEventListener('mouseleave', function(event) { if(canvasObj.canvas !== document.elementFromPoint(event.clientX, event.clientY)) canvasObj.mousePos = { x: -1, y: -1 }; });
+      // Mouse clickity clack
+      canvasObj.canvas.addEventListener('click', function(event) {
+        if(board.style && board.style.getPropertyValue('display') === 'none') { canvasObj.mousePos = { x: -1, y: -1 }; return; };
+        // Canvas bounding box
+        let rect = canvasObj.canvas.getBoundingClientRect();
+        // Our coordinates
+        let x = Math.floor((event.clientX - rect.left) / (rect.right - rect.left) * canvasObj.canvas.width);
+        let y = Math.floor((event.clientY - rect.top) / (rect.bottom - rect.top) * canvasObj.canvas.height);
+        // If the X or Y coordinates are not on the canvas, set them to -1
+        if(x < 0 || x > 340) x = -1;
+        if(y < 0 || y > 340) y = -1;
+        // Set the coordinates in the object
+        canvasObj.mousePos = { x: x, y: y };
+        // If no coordinates are -1, send a click event
+        if(x !== -1 && y !== -1) canvasObj.click(x, y, event);
+      });
+    })();
+
+    // TOUCH EVENTS (SINGLE TOUCH RIGHT NOW)
+    (function() {
+      // Touch events are much harder to process properly, so we need these
+      // HOLD EVENTS ARE WIP
+      //var maxHoldTime = 250;
+      //let holdTime = 0; // If movedTooMuch is not true and holdTime reaches maxHoldTime, it will fire a type = HOLD event. If released before 250, a type = TAP event is fired
+      //let holdFired = false;
+      let alterPos = {x: 0, y: 0};
+      let movedTooMuch = false; // Makes touch type = UNKNOWN instead of HOLD
+      canvasObj.canvas.addEventListener('touchstart', function(event) {
+
+      });
+    })();
 
     window.requestAnimationFrame(canvasObj.render);
   },
