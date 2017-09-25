@@ -1,3 +1,6 @@
+// Basically equals the time it takes for a frame to pass with 60 FPS
+const fps60 = 1000 / 60;
+
 var socket;
 /** Used to prevent constant querySelector usage in Canvas.render() */
 var board;
@@ -13,10 +16,10 @@ var Canvas = {
   /** The WebGL Context. Will be <b>null</b> if WebGL is off */
   gl: null,
   /**
-   * The Canvas's render method<br>(Yes, I could've made it separate, but for JSDoc cleanliness, I added it to the object - FatalError)
-   * @param {DOMHighResTimeStamp} deltaTime
+   * The Canvas's render method<br>(Yes, I could've made it separate, but for JSDoc cleanliness, I added it to the object - FatalError)<br>
+   * By using Date.now(), you can calculate delta time
    */
-  render: function(deltaTime) { window.requestAnimationFrame(Canvas.render); },
+  render: function() { window.requestAnimationFrame(Canvas.render); },
   /**
    * The Canvas's click method. Usually called when it's clicked and Utils.initializeCanvas was called.
    * @param {number} x
@@ -416,9 +419,10 @@ function makemove(x, y) {
 
 }
 
-let lastTime = 0;
+let lastDelta = Date.now();
 Canvas.render = function(time) {
-  let deltaTime = time - lastTime;
+  let deltaTime = Date.now() - lastDelta;
+  lastDelta = Date.now();
   // UPDATES
   for(let x = 0; x < 3; x++) {
     for(let y = 0; y < 3; y++) {
@@ -427,8 +431,8 @@ Canvas.render = function(time) {
       if(Canvas.mousePos.x >= (115 * x) + 15 && Canvas.mousePos.x <= (115 * x) + 115
         && Canvas.mousePos.y >= (115 * y) + 15 && Canvas.mousePos.y <= (115 * y) + 115)
         // Interpolate the current buffer to 230
-        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, 0.2);
-      else Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 0, 0.2);; // Reset to 0
+        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, (0.2 / fps60) * deltaTime);
+      else Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 0, (0.2 / fps60) * deltaTime);; // Reset to 0
     }
    }
   // RENDERING
