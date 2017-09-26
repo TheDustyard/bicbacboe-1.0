@@ -110,6 +110,7 @@ html, body {
     -ms-user-select:none;
     user-select:none;
     -o-user-select:none;
+        cursor: pointer;
 }
 
 .dropdown {
