@@ -15,6 +15,8 @@ var Canvas = {
   ctx: null,
   /** The WebGL Context. Will be <b>null</b> if WebGL is off */
   gl: null,
+  /** WebGL data. By that I mean that anything related to WebGL that needs to be stored is in this variable */
+  glData: {},
   /**
    * The Canvas's render method<br>(Yes, I could've made it separate, but for JSDoc cleanliness, I added it to the object - FatalError)<br>
    * By using Date.now(), you can calculate delta time
@@ -63,6 +65,7 @@ function login() {
     // Set board to board object
     board = $("#board");
     // Prepare our Canvas
+    // SETTING THE SECOND ARGUMENT TO FALSE WILL ALLOW WEBGL, WHICH IS NOT YET FULLY IMPLEMENTED
     Utils.initializeCanvas(Canvas, true);
 
     connecting();
@@ -79,7 +82,7 @@ function login() {
                 piece = data.piece;
                 for(x = 0; x < 3; x++)
                   for(y = 0; y < 3; y++)
-                    piecePlacements[Utils.effects.getBoardPos(x, y)] = " ";
+                    piecePlacements[Utils.Effects.getBoardPos(x, y)] = " ";
                 joinedGame();
                 break;
             case 'gameNotFound':
@@ -339,7 +342,7 @@ function joinedGame() {
     // Reset board mouseover effect
     for(let x = 0; x < 3; x++)
       for(let y = 0; y < 3; y++)
-        Canvas.effectBuffer.board_mouseover[Utils.effects.getBoardPos(x, y)] = 0;
+        Canvas.effectBuffer.board_mouseover[Utils.Effects.getBoardPos(x, y)] = 0;
 }
 /**
  * Shows an invalid name error
@@ -428,7 +431,7 @@ Canvas.click = function(x, y, event) {
 }
 
 function makemove(x, y) {
-    let boardPos = Utils.effects.getBoardPos(x, y);
+    let boardPos = Utils.Effects.getBoardPos(x, y);
     if (turn !== piece || piecePlacements[boardPos] !== " " || !gameplaying)
         return;
 
@@ -449,7 +452,7 @@ Canvas.render = function(time) {
   // UPDATES
   for(let x = 0; x < 3; x++) {
     for(let y = 0; y < 3; y++) {
-      let boardPos = Utils.effects.getBoardPos(x, y);
+      let boardPos = Utils.Effects.getBoardPos(x, y);
       // If the mouse is above a square
       let interpolationVal =  (0.2 / fps60) * deltaTime;
       if(interpolationVal > 0.95) interpolationVal = 0.95;
@@ -457,9 +460,9 @@ Canvas.render = function(time) {
       if(Canvas.mousePos.x >= (115 * x) + 15 && Canvas.mousePos.x <= (115 * x) + 115
         && Canvas.mousePos.y >= (115 * y) + 15 && Canvas.mousePos.y <= (115 * y) + 115)
         // Interpolate the current buffer to 230
-        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, interpolationVal);
+        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.Math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, interpolationVal);
       else { // Reset to 0
-        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 0, interpolationVal);
+        Canvas.effectBuffer.board_mouseover[boardPos] = Utils.Math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 0, interpolationVal);
         if(Canvas.effectBuffer.board_mouseover[boardPos] < 0) Canvas.effectBuffer.board_mouseover[boardPos] = 0;
       }
     }
@@ -469,23 +472,33 @@ Canvas.render = function(time) {
   if(board.style && board.style.getPropertyValue("display") === "none") { window.requestAnimationFrame(Canvas.render); return; }
 
   // Shortcuts so we don't have to type out the entire thing every time
-  let gl = Canvas.gl; let ctx = Canvas.ctx;
+  let gl = Canvas.gl; let ctx = Canvas.ctx; let glData = Canvas.glData;
   // GL Preparation
   if(gl) {
-    gl.viewport(0, 0, 360, 360);
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
   }
 
   // Board rendering
   if(gl) {
-    // TODO: Figure out this thing
+    gl.useProgram(glData.sv.program);
+    gl.bindBuffer(gl.ARRAY_BUFFER, glData.sv.buffer);
+    for(let x = 0; x < 1; x++) {
+      for(let y = 0; y < 1; y++) {
+        let boardpos = Utils.Effects.getBoardPos(x, y);
+        if(turn !== piece || piecePlacements[boardpos] !== " " || !gameplaying)
+          gl.uniform4fv(glData.sv.program.uColor, [Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]) / 255, 0.0, 0.0, 1.0]);
+        else gl.uniform4fv(glData.sv.program.uColor, [0.0, Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]) / 255, 0.0, 1.0]);
+        gl.vertexAttribPointer(glData.sv.program.vPosition, glData.sv.itemSize, gl.FLOAT, false, (((115 * x) + 15) / 360 * 2) - 1, (((115 * y) + 15) / 360 * 2) - 1);
+        gl.drawArrays(gl.TRIANGLES, 0, glData.sv.numItems);
+      }
+    }
   } else if(ctx) { // To avoid any crashes
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, 360, 360); // Background
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
-        let boardpos = Utils.effects.getBoardPos(x, y);
+        let boardpos = Utils.Effects.getBoardPos(x, y);
         // Retrieve color from the effect buffer using the board position
         let color = Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]).toString(16);
         // If the color is a 1 length hex, make it a 2 length hex (0x5 = 0x05)
@@ -499,11 +512,13 @@ Canvas.render = function(time) {
   }
 
   // Piece rendering
-  if(ctx) {
+  if(gl) {
+
+  } else if(ctx) {
     ctx.strokeStyle = "#FFFFFF";
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
-        let boardPos = Utils.effects.getBoardPos(x, y);
+        let boardPos = Utils.Effects.getBoardPos(x, y);
         if(piecePlacements[boardPos] === "x") {
           // Top left to bottom right
           ctx.beginPath();
@@ -515,7 +530,7 @@ Canvas.render = function(time) {
           ctx.moveTo(x * 115 + 100, y * 115 + 30);
           ctx.lineTo(x * 115 + 30, y * 115 + 100);
           ctx.stroke();
-        } else if(piecePlacements[boardPos] === "o") Utils.effects.ctxDrawEllipse(ctx, x * 115 + 30, y * 115 + 30, 70, 70);
+        } else if(piecePlacements[boardPos] === "o") Utils.Effects.ctxDrawEllipse(ctx, x * 115 + 30, y * 115 + 30, 70, 70);
       }
     }
   }

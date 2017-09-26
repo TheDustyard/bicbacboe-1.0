@@ -47,7 +47,7 @@ var Utils = {
     canvasObj.effectBuffer.board_mouseover = {};
     for(let x = 0; x < 3; x++) {
       for(let y = 0; y < 3; y++) {
-        canvasObj.effectBuffer.board_mouseover[Utils.effects.getBoardPos(x, y)] = 0;
+        canvasObj.effectBuffer.board_mouseover[Utils.Effects.getBoardPos(x, y)] = 0;
       }
     }
     // Set canvas to Canvas object
@@ -108,14 +108,107 @@ var Utils = {
       });
     })();
 
-    window.requestAnimationFrame(canvasObj.render);
+    // CREATE SHADERS AND FRAGMENTS IF RUNNING IN WEBGL MODE
+    if(canvasObj.gl) {
+      let gl = canvasObj.gl;
+      gl.viewport(0, 0, canvasObj.canvas.width, canvasObj.canvas.height);
+      Utils.WebGL.loadShader("square-vertex.js", function(err, sv) {
+        if(err) { console.error("Failed to load square vertex shader!", err); return; }
+        Utils.WebGL.loadShader("fragment.js", function(err, f) {
+          if(err) { console.error("Failed to load fragment shader!", err); return; }
+          let shaders = Utils.WebGL.initShaders(gl, {sv: sv, f: f});
+          let buffers = Utils.WebGL.initBuffers(gl);
+          // Combine programs with buffers
+          buffers.sv.program = shaders.sv;
+          canvasObj.glData = buffers;
+          // Use the square program
+          gl.useProgram(canvasObj.glData.sv.program);
+
+          canvasObj.glData.sv.program.uColor = gl.getUniformLocation(canvasObj.glData.sv.program, "uColor");
+          canvasObj.glData.sv.program.vPosition = gl.getAttribLocation(canvasObj.glData.sv.program, "vPosition");
+          gl.enableVertexAttribArray(canvasObj.glData.sv.program.vPosition);
+
+          window.requestAnimationFrame(canvasObj.render);
+        });
+      });
+    } else window.requestAnimationFrame(canvasObj.render);
+  },
+  /**
+   * Various WebGL utility and helper methods
+   * @namespace
+   * @memberof Utils
+   */
+  WebGL: {
+    /**
+     * Load a shader from the webserver
+     * @param {string} name - The name of the shader, webgl/ is prefixed
+     * @param {method} callback
+     */
+    loadShader: function(name, callback) {
+      let req = new XMLHttpRequest();
+      req.open('GET', 'webgl/' + name);
+      req.onreadystatechange = function() {
+        if(req.readyState === 4) {
+          if(req.status !== 200) callback({ status: req.status, message: req.statusText, error: "Failed request" }, null);
+          else if(!req.responseText) callback({ status: req.status, message: req.statusText, error: "No data" }, null);
+          else callback(null, req.responseText);
+          req = null;
+        }
+      }
+      req.send();
+    },
+    initShaders: function(gl, shaders) {
+      // Compile the square vertex shader
+      var svs = gl.createShader(gl.VERTEX_SHADER);
+      gl.shaderSource(svs, shaders.sv);
+      gl.compileShader(svs);
+      // Compile the fragment shader
+      var fs = gl.createShader(gl.FRAGMENT_SHADER);
+      gl.shaderSource(fs, shaders.f);
+      gl.compileShader(fs);
+      // Attach and link everything together
+      svprogram = gl.createProgram();
+      gl.attachShader(svprogram, svs);
+      gl.attachShader(svprogram, fs);
+      gl.linkProgram(svprogram);
+
+      // ERROR CHECKING
+      if (!gl.getShaderParameter(svs, gl.COMPILE_STATUS))
+        console.error(gl.getShaderInfoLog(svs));
+      if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS))
+        console.error(gl.getShaderInfoLog(fs));
+      if (!gl.getProgramParameter(svprogram, gl.LINK_STATUS))
+        console.error(gl.getProgramInfoLog(svprogram));
+
+      return {
+        sv: svprogram
+      }
+    },
+    /** Initialize all our buffers */
+    initBuffers: function(gl) {
+      // Create 2 triangles to make a square
+      // 0.5 * 360 = 100 - Each square in 2D context has width and height 100px
+      let svvertices = new Float32Array([
+        -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, // Triangle 1
+        -0.5, 0.5, 0.5, -0.5, -0.5, -0.5 // Triangle 2
+      ]);
+
+      // Create a buffer and assign the triangles to it
+      svbuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, svbuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, svvertices, gl.STATIC_DRAW);
+
+      return {
+        sv: { buffer: svbuffer, itemSize: 2, numItems: svvertices.length / 2 }
+      };
+    }
   },
   /**
    * Math utility methods
    * @namespace
    * @memberof Utils
    */
-  math: {
+  Math: {
     /**
      * Linear interpolation function (goes fast then slows down), returns a number between <b>a</b> and <b>b</b> by <b>x</b>
      * @param {number} a - Initial number
@@ -134,7 +227,7 @@ var Utils = {
    * @namespace
    * @memberof Utils
    */
-  effects: {
+  Effects: {
     /**
      * Generate a board position (in a string) from X and Y coordinates
      * @param {number} x
