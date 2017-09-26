@@ -245,7 +245,7 @@ html, body {
     padding: 5px 0px;
     font: 12px Arial, "sans-serif";
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 2px;
     transition: background-color 0.3s;
     user-select: none;
     width: 100%;
