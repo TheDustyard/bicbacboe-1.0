@@ -30,13 +30,13 @@ var Canvas = {
    */
   click: function(x, y, event) { console.warn("Click function uninitialized"); },
   /**
-   * The Canvas's touch method. Called when it's touched and Utils.initializeCanvas was called.<br>Lets touch events process as clicks if the method returns false.
+   * The Canvas's touch method. Called when it's touched and Utils.initializeCanvas was called.
    * @param {number} x
    * @param {number} y
    * @param {string} type - Either TAP or UNKNOWN
    * @param {TouchEvent} event - The touch event
    */
-  touch: function(x, y, type, event) { console.warn("Touch function uninitialized"); return false; },
+  touch: function(x, y, type, event) { console.warn("Touch function uninitialized"); },
   /**
    * Used for storing the states of any effects and animations<br>
    * (Afterall, I want the line drawing and board highlighting and all that to look nice - FatalError)
@@ -47,7 +47,9 @@ var Canvas = {
    * Canvas's current mouse X and Y position<br>
    * -1 = Mouse not over canvas
    */
-  mousePos: { x: -1, y: -1 }
+  mousePos: { x: -1, y: -1 },
+  /** Touch state of the canvas thingy */
+   touchState: { touching: false, moved: false }
 };
 
 var piece;
@@ -324,6 +326,10 @@ function leftGame() {
     $('#board').style.display = "none";
     $('#X').style.display = "none"; // Hides the Quit button
     $('#gameinfo').style.display = "none";
+    gamestate = null;
+    gameplaying = false;
+    piece = undefined;
+    turn = " ";
     window.location.hash = ""; // Removes the hash in the page URL
 }
 /**
@@ -374,7 +380,7 @@ function matchUpdate(data) {
     $('#xman').innerHTML = pieces.X ? pieces.X : 'None';
     $('#oman').innerHTML = pieces.O ? pieces.O : 'None';
 
-    // Check if X side is ready (I think)
+    // Check if X side is ready or resetting
     if (data.X) {
         $('#xname').className = data.X.ready ? "ready" : "notready";
         $('#xreset').style.display = data.X.reset ? "block" : "none";
@@ -383,7 +389,7 @@ function matchUpdate(data) {
         $('#xreset').style.display = "none";
     }
 
-    // Check if O side is ready (I thonk)
+    // Check if O side is ready or resseting
     if (data.O) {
         $('#oname').className = data.O.ready ? "ready" : "notready";
         $('#oreset').style.display = data.O.reset ? "block" : "none";
@@ -391,6 +397,10 @@ function matchUpdate(data) {
         $('#oname').className = "notready";
         $('#oreset').style.display = "none";
     }
+
+    // Set the ready and reset variables according to the data sent to us
+    if(piece && data[piece.toUpperCase()]) isready = data[piece.toUpperCase()].ready;
+    if(piece && data[piece.toUpperCase()]) reset = data[piece.toUpperCase()].reset;
 
     if (this.gameplaying === true) {
         $('#toggleready').style.display = "none";
@@ -419,7 +429,7 @@ function dropdown(search, that) {
 
 Canvas.click = function(x, y, event) {
   if(event.button !== 0) return;
-  console.log("CLICK!\nX: " + x + ", Y: " + y);
+  console.log("CLICK! X: " + x + ", Y: " + y);
   for(let sx = 0; sx < 3; sx++) {
     for(let sy = 0; sy < 3; sy++) {
       if(x >= (115 * sx) + 15 && x <= (115 * sx) + 115 && y >= (115 * sy) + 15 && y <= (115 * sy) + 115) {
@@ -430,8 +440,23 @@ Canvas.click = function(x, y, event) {
   }
 }
 
-function makemove(x, y) {
-    let boardPos = Utils.Effects.getBoardPos(x, y);
+Canvas.touch = function(x, y, type, event) {
+  if(type !== "TAP") { console.log(type + " touch type"); return; }
+  console.log("TAP! X: " + x + ", Y: " + y);
+  for(let sx = 0; sx < 3; sx++) {
+    for(let sy = 0; sy < 3; sy++) {
+      if(x >= (115 * sx) + 15 && x <= (115 * sx) + 115 && y >= (115 * sy) + 15 && y <= (115 * sy) + 115) {
+        let boardPos = Utils.Effects.getBoardPos(sx, sy);
+        console.log("Square tapped: " + sx + ", " + sy);
+        Canvas.effectBuffer.board_mouseover[boardPos] = 1000;
+        makemove(sx, sy, boardPos);
+      }
+    }
+  }
+}
+
+function makemove(x, y, boardPos) {
+    if(!boardPos) boardPos = Utils.Effects.getBoardPos(x, y);
     if (turn !== piece || piecePlacements[boardPos] !== " " || !gameplaying)
         return;
 
@@ -441,8 +466,7 @@ function makemove(x, y) {
     socket.send(JSON.stringify({
         type: 'makeMove',
         position: boardPos
-    }))
-
+    }));
 }
 
 let lastDelta = Date.now();
@@ -453,11 +477,12 @@ Canvas.render = function(time) {
   for(let x = 0; x < 3; x++) {
     for(let y = 0; y < 3; y++) {
       let boardPos = Utils.Effects.getBoardPos(x, y);
-      // If the mouse is above a square
       let interpolationVal =  (0.2 / fps60) * deltaTime;
       if(interpolationVal > 0.95) interpolationVal = 0.95;
       else if(interpolationVal < 0) interpolationVal = 0;
-      if(Canvas.mousePos.x >= (115 * x) + 15 && Canvas.mousePos.x <= (115 * x) + 115
+      // If the mouse/finger is above a square
+      if((!Canvas.touchState.touching || Canvas.touchState.moved)
+        && Canvas.mousePos.x >= (115 * x) + 15 && Canvas.mousePos.x <= (115 * x) + 115
         && Canvas.mousePos.y >= (115 * y) + 15 && Canvas.mousePos.y <= (115 * y) + 115)
         // Interpolate the current buffer to 230
         Canvas.effectBuffer.board_mouseover[boardPos] = Utils.Math.lerp(Canvas.effectBuffer.board_mouseover[boardPos], 230, interpolationVal);
@@ -482,14 +507,17 @@ Canvas.render = function(time) {
   // Board rendering
   if(gl) {
     gl.useProgram(glData.sv.program);
-    gl.bindBuffer(gl.ARRAY_BUFFER, glData.sv.buffer);
     for(let x = 0; x < 1; x++) {
       for(let y = 0; y < 1; y++) {
         let boardpos = Utils.Effects.getBoardPos(x, y);
+        let color = Canvas.effectBuffer.board_mouseover[boardpos];
+        if(color > 255) color = 255;
+        color = color / 255;
+        gl.bindBuffer(gl.ARRAY_BUFFER, glData.sv.buffer);
         if(turn !== piece || piecePlacements[boardpos] !== " " || !gameplaying)
-          gl.uniform4fv(glData.sv.program.uColor, [Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]) / 255, 0.0, 0.0, 1.0]);
-        else gl.uniform4fv(glData.sv.program.uColor, [0.0, Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]) / 255, 0.0, 1.0]);
-        gl.vertexAttribPointer(glData.sv.program.vPosition, glData.sv.itemSize, gl.FLOAT, false, (((115 * x) + 15) / 360 * 2) - 1, (((115 * y) + 15) / 360 * 2) - 1);
+          gl.uniform4fv(glData.sv.program.uColor, [color, 0.0, 0.0, 1.0]);
+        else gl.uniform4fv(glData.sv.program.uColor, [0.0, color, 0.0, 1.0]);
+        gl.vertexAttribPointer(glData.sv.program.vPosition, glData.sv.itemSize, gl.FLOAT, false, 0, 0);
         gl.drawArrays(gl.TRIANGLES, 0, glData.sv.numItems);
       }
     }
@@ -500,7 +528,9 @@ Canvas.render = function(time) {
       for(let y = 0; y < 3; y++) {
         let boardpos = Utils.Effects.getBoardPos(x, y);
         // Retrieve color from the effect buffer using the board position
-        let color = Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]).toString(16);
+        let color = Math.floor(Canvas.effectBuffer.board_mouseover[boardpos]);
+        if(color > 255) color = 255;
+        color = color.toString(16);
         // If the color is a 1 length hex, make it a 2 length hex (0x5 = 0x05)
         if(color.length === 1) color = "0" + color;
         // If it isn't your turn or the position already has a piece, show a red color (Cause #RGB)
