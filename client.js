@@ -618,3 +618,11 @@ The first person to ever upvote :b:ic :b:ac :b:oe upvoted a game literally pulle
 :b:ic :b:ac :b:oe is evidence that humans can stare into the meaningless void of eternity and force their own meaning onto to it. I will always upvote :b:ic :b:ac :b:oe,
 :lock: LOCKED UNTIL RELEASE :lock:!
 */
+/* 
+My teacher said to my I'm a failure, that I'll never amount to anything. I scoffed at him. Shocked, my teacher asked what's so funny, my future is on the line. "Well...you see professor"
+I say as the teacher prepares to laugh at my answer, rebuttal at hand.
+"I play :b:ic :b:ac :b:oe."
+The class is shocked, they merely play pleb games like Roblox to feign intelligence, not grasping the humor. "...how?"
+I can't even understand it's sheer nuance and subtlety." "Well you see... :lock: LOCKED UNTIL RELEASE :lock:!"
+One line student laughs in the back, I turn to see a who this fellow genius is. It's none other than Albert Einstein.
+*/
