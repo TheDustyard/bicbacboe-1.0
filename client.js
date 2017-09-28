@@ -49,7 +49,7 @@ var Canvas = {
    */
   mousePos: { x: -1, y: -1 },
   /** Touch state of the canvas thingy */
-   touchState: { touching: false, moved: false }
+  touchState: { touching: false, moved: false }
 };
 
 var piece;
@@ -61,6 +61,9 @@ var gamestate;
 var gameplaying = false;
 var isready = false;
 var reset = false;
+
+// FOR DEBUGGING ONLY!
+var debug = false;
 
 /** Executed when all the HTML loads */
 function login() {
@@ -562,6 +565,17 @@ Canvas.render = function(time) {
           ctx.stroke();
         } else if(piecePlacements[boardPos] === "o") Utils.Effects.ctxDrawEllipse(ctx, x * 115 + 30, y * 115 + 30, 70, 70);
       }
+    }
+  }
+
+  // DEBUGGING
+  if(debug) {
+    if(gl) {
+
+    } else if(ctx) {
+      ctx.fillStyle = "#000000";
+      ctx.font = "8px Open Sans";
+      ctx.fillText(Math.round(1000 / deltaTime) + " FPS", 5, 10);
     }
   }
 

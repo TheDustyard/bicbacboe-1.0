@@ -76,7 +76,7 @@ var Utils = {
         // Set the coordinates in the object
         canvasObj.mousePos = pos;
         // If no coordinates are -1, send a click event
-        if(pos.x !== -1 && pos.y !== -1) canvasObj.click(x, y, event);
+        if(pos.x !== -1 && pos.y !== -1) canvasObj.click(pos.x, pos.y, event);
       });
     })();
 
