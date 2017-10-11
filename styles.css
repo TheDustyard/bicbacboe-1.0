@@ -185,25 +185,70 @@ html, body {
     -ms-user-select: none;
 }
 
-#X {
-    background: #2b2b2b;
-    color: white;
-    padding: 5px 10px;
-    font-family: "Open Sans", "sans-serif";
-    font-size: 35px;
-    cursor: pointer;
+#belowboard {
+  position: absolute;
+  flex-wrap: nowrap;
+  font-size: 0;
+  left: 50%;
+  top: calc(50% + 370px);
+  transform: translate(-50%, 0%);
+}
+#gamerematch {
+  text-align: center;
+  align-items: center;
+}
+#belowboard .text {
+  box-shadow: 0 0 10px 3px black;
+  font-size: 35px;
+  color: white;
+}
+#gamerematch .gamebutton {
+  display: inline-block;
+}
+
+#buttonset {
     position: absolute;
-    bottom: 5px;
-    left: 5px;
+    bottom: 10px;
+    left: 10px;
+
     border-radius: 5px;
     border: 2px solid white;
     box-shadow: 0 0 10px 3px black;
-    transition: background-color 0.3s;
+
+    background: #2b2b2b;
+    color: white;
+    transition: background-color 0.1s;
+
+    font-family: "Open Sans", "sans-serif";
+    font-size: 0;
     user-select: none;
 }
 
-#X:hover {
-    background: #CE0000
+#quit, #toggleready, #togglereset {
+    font-size: 35px;
+    padding: 5px;
+    cursor: pointer;
+    display: inline-block;
+    background: #2b2b2b;
+    color: white;
+    transition: background-color 0.1s;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+#togglereset.reset { background: #FE9A2E; }
+
+#quit:hover { background: darkred; }
+#togglereset:hover { background: #DF7401; }
+#toggleready:hover.ready { background-color: darkgreen; }
+#toggleready:hover.notready { background-color: darkred; }
+
+#xname.ready, #oname.ready, #toggleready.ready {
+    background-color: green;
+}
+
+#xname.notready, #oname.notready, #toggleready.notready {
+    background-color: red;
 }
 
 #turndude {
@@ -226,17 +271,13 @@ html, body {
     box-shadow: 0 0 6px 0px black;
 }
 
-
-.ready {
-    background-color: green;
-}
-
-.notready {
-    background-color: red;
-}
-
 #xname, #oname, #xreset, #oreset {
     padding: 5px 10px;
+    transition: background-color 0.1s;
+}
+
+#xreset, #oreset {
+  background-color: #FE9A2E;
 }
 
 #toggleAnim {

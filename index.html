@@ -18,22 +18,29 @@
         <div id="invalidgame">Invalid game</div>
         <div id="invalidname">Invalid name</div>
 
-        <div onclick="leaveGame()" id="X" style="display: none;">Quit</div>
+        <div id="buttonset" style="display: none;">
+          <div onclick="leaveGame()" id="quit"><i class="fa fa-sign-out"></i></div>
+          <div onclick="isready = !isready; ready(isready);" id="toggleready" class="notready"><i class="fa fa-check"></i></div>
+          <div onclick="reset = !reset; togglereset(reset);" id="togglereset"><i class="fa fa-refresh"></i></div>
+        </div>
         <div id="login">
-          <img width=200px src="./logo.PNG" style="border-radius:5px;box-shadow: 0 0 4px black;">
+          <img width=200px src="./logo.PNG" style="border-radius:5px; box-shadow: 0 0 4px black;">
           <br>
           <br>
-          <br>
-          <br>
-            <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname"><br>
-            <button onclick="createGame()" id="create" class="gamebutton" style="font-size:23px;margin-top:20px;">Create game</button>
-            <button onclick="joinGame()" id="join" class="gamebutton" style="display: none;font-size:23px;margin-top:20px;">Join game</button>
+          <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname"><br>
+          <button onclick="createGame()" id="create" class="gamebutton" style="font-size:23px;margin-top:20px;">Create game</button>
+          <button onclick="joinGame()" id="join" class="gamebutton" style="display: none;font-size:23px;margin-top:20px;">Join game</button>
         </div>
 
         <div id="board" style="display: none;">
             <canvas id="cv" width="360" height="360">HTML5 not supported by your browser! Please upgrade.</canvas>
         </div>
+        <div id="belowboard">
+          <span id="text"></span>
+          <div id="gamerematch">
 
+          </div>
+        </div>
         <div id="gameinfo" style="display: none;">
             <table cellspacing=0 cellpadding=0>
                 <tr>
@@ -54,8 +61,6 @@
                 </tr>
             </table>
             <div id="turndude">Turn: <span id="turnman">Game not started</span></div>
-            <button onclick="isready = !isready; ready(isready);" id="toggleready">toggle ready</button>
-            <button onclick="reset = !reset; togglereset(reset);" id="togglereset">toggle reset</button>
         </div>
 
         <div id="topright">

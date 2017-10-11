@@ -109,6 +109,9 @@ function login() {
             case 'broadcast':
                 alert(`BROADCAST: ${data.message}`);
                 break;
+            case 'userWon':
+                // TODO: Implement this thing
+                break;
         }
     }
     // Socket opened
@@ -327,7 +330,7 @@ function leftGame() {
     $('#sharelink').value = "";
     $('#login').style.display = "block";
     $('#board').style.display = "none";
-    $('#X').style.display = "none"; // Hides the Quit button
+    $('#buttonset').style.display = "none";
     $('#gameinfo').style.display = "none";
     gamestate = null;
     gameplaying = false;
@@ -346,7 +349,7 @@ function joinedGame() {
     $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
     $('#login').style.display = "none";
     $('#board').style.display = "block";
-    $('#X').style.display = "block"; // Shows the Quit button
+    $('#buttonset').style.display = "block";
     $('#gameinfo').style.display = "block";
     // Reset board mouseover effect
     for(let x = 0; x < 3; x++)
@@ -385,18 +388,34 @@ function matchUpdate(data) {
 
     // Check if X side is ready or resetting
     if (data.X) {
+        if(piece === 'x') {
+          $("#toggleready").className = data.X.ready ? "ready" : "notready";
+          $("#togglereset").className = data.X.reset ? "reset" : "";
+        }
         $('#xname').className = data.X.ready ? "ready" : "notready";
         $('#xreset').style.display = data.X.reset ? "block" : "none";
     } else {
+        if(piece === 'x') {
+          $("#toggleready").className = "notready";
+          $("#togglereset").className = "";
+        }
         $('#xname').className = "notready";
         $('#xreset').style.display = "none";
     }
 
     // Check if O side is ready or resseting
     if (data.O) {
+        if(piece === 'o') {
+          $("#toggleready").className = data.O.ready ? "ready" : "notready";
+          $("#togglereset").className = data.O.reset ? "reset" : "";
+        }
         $('#oname').className = data.O.ready ? "ready" : "notready";
         $('#oreset').style.display = data.O.reset ? "block" : "none";
     } else {
+        if(piece === 'o') {
+          $("#toggleready").className = "notready";
+          $("#togglereset").className = "";
+        }
         $('#oname').className = "notready";
         $('#oreset').style.display = "none";
     }
@@ -410,7 +429,7 @@ function matchUpdate(data) {
         $('#turnman').innerHTML = pieces[turn.toUpperCase()];
         $('#turndude').style.display = "block";
     } else {
-        $('#toggleready').style.display = "block";
+        $('#toggleready').style.display = "inline-block";
         $('#turndude').style.display = "none";
     }
 }
@@ -618,7 +637,7 @@ The first person to ever upvote :b:ic :b:ac :b:oe upvoted a game literally pulle
 :b:ic :b:ac :b:oe is evidence that humans can stare into the meaningless void of eternity and force their own meaning onto to it. I will always upvote :b:ic :b:ac :b:oe,
 :lock: LOCKED UNTIL RELEASE :lock:!
 */
-/* 
+/*
 My teacher said to my I'm a failure, that I'll never amount to anything. I scoffed at him. Shocked, my teacher asked what's so funny, my future is on the line. "Well...you see professor"
 I say as the teacher prepares to laugh at my answer, rebuttal at hand.
 "I play :b:ic :b:ac :b:oe."
