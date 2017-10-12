@@ -75,7 +75,9 @@ function login() {
 
     connecting();
 
-    socket = new WebSocket("wss://dusterthefirst.ddns.net:42691");
+    //socket = new WebSocket("wss://dusterthefirst.ddns.net:42691");
+    // FATALERROR TEST SERVER
+    socket = new WebSocket("wss://gitlab.skeletongames.eu:42691");
     // When we receive a socket message
     socket.onmessage = (event) => {
         let data = JSON.parse(event.data);
@@ -376,21 +378,25 @@ function namevalid() {
 /** Updates the match */
 function matchUpdate(data) {
     // SET ALL THE STATES!
-    pieces = {X:data.X ? data.X.name : 'None', O:data.O ? data.O.name : 'None'};
+    pieces = {X:data.X ? data.X.name : 'No one', O:data.O ? data.O.name : 'No one'};
     turn = data.turn;
     gamestate = data.state;
     gameplaying = data.state === 'playing';
     piecePlacements = data.board;
 
     // Set the names in the top left
-    $('#xman').innerHTML = pieces.X ? pieces.X : 'None';
-    $('#oman').innerHTML = pieces.O ? pieces.O : 'None';
+    $('#xman').innerHTML = pieces.X ? pieces.X : "No one";
+    $('#oman').innerHTML = pieces.O ? pieces.O : "No one";
 
     // Check if X side is ready or resetting
     if (data.X) {
         if(piece === 'x') {
           $("#toggleready").className = data.X.ready ? "ready" : "notready";
           $("#togglereset").className = data.X.reset ? "reset" : "";
+        }
+        if($("#xpoints").innerHTML != "" && data.X.points.toString() != $("#xpoints").innerHTML) {
+          $("#xpoints").className = "highlighted";
+          setTimeout(function() { $("#xpoints").className = ""; }, 1000);
         }
         $('#xname').className = data.X.ready ? "ready" : "notready";
         $('#xreset').style.display = data.X.reset ? "block" : "none";
@@ -409,6 +415,10 @@ function matchUpdate(data) {
           $("#toggleready").className = data.O.ready ? "ready" : "notready";
           $("#togglereset").className = data.O.reset ? "reset" : "";
         }
+        if($("#opoints").innerHTML != "" && data.O.points.toString() != $("#opoints").innerHTML) {
+          $("#opoints").className = "highlighted";
+          setTimeout(function() { $("#opoints").className = ""; }, 1000);
+        }
         $('#oname').className = data.O.ready ? "ready" : "notready";
         $('#oreset').style.display = data.O.reset ? "block" : "none";
     } else {
@@ -419,6 +429,9 @@ function matchUpdate(data) {
         $('#oname').className = "notready";
         $('#oreset').style.display = "none";
     }
+
+    $("#xpoints").innerHTML = data.X ? data.X.points : "";
+    $("#opoints").innerHTML = data.O ? data.O.points : "";
 
     // Set the ready and reset variables according to the data sent to us
     if(piece && data[piece.toUpperCase()]) isready = data[piece.toUpperCase()].ready;

@@ -280,6 +280,14 @@ html, body {
   background-color: #FE9A2E;
 }
 
+#xpoints, #opoints {
+  font-weight: 700;
+  color: black;
+  transition: color 0.5s;
+}
+
+#xpoints.highlighted, #opoints.highlighted { color: white; }
+
 #toggleAnim {
     background: #CE0000;
     color: white;
