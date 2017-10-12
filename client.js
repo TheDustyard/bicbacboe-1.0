@@ -75,9 +75,9 @@ function login() {
 
     connecting();
 
-    //socket = new WebSocket("wss://dusterthefirst.ddns.net:42691");
+    socket = new WebSocket("wss://dusterthefirst.ddns.net:42691");
     // FATALERROR TEST SERVER
-    socket = new WebSocket("wss://gitlab.skeletongames.eu:42691");
+    //socket = new WebSocket("wss://gitlab.skeletongames.eu:42691");
     // When we receive a socket message
     socket.onmessage = (event) => {
         let data = JSON.parse(event.data);
