@@ -64,7 +64,7 @@
         </div>
 
         <div id="topright">
-            <span onclick="dropdown('#info', this)" id="dropbtn">&#9658;</span><input id="sharelink" type="text" readonly placeholder="Not in game">
+            <span onclick="dropdown('#info', this)" id="dropbtn">&#9658;</span><input id="sharelink" type="text" onchange="window.location.hash=this.value" placeholder="Not in game">
             <table id="info" class="dropdown">
                 <tr>
                     <td class="row1">
