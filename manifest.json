@@ -1,0 +1,16 @@
+{
+    "short_name": "BicBacBoe",
+    "name": "BicBacBoe - Online TicTacToe",
+    "start_url": "index.html",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#D20000",
+    "background_color": "#D20000",
+    "icons": [
+        {
+          "src": "B-icon.png",
+          "type": "image/png",
+          "sizes": "144x144"
+        }
+    ]
+}

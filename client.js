@@ -67,6 +67,18 @@ var debug = false;
 
 /** Executed when all the HTML loads */
 function login() {
+    // SERVICE WORKER
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js', { scope: '/', useCache: false })
+            .then((registration) => {
+                console.log('Service Worker Registered');
+            });
+
+        navigator.serviceWorker.ready.then(function(registration) {
+           console.log('Service Worker Ready');
+        });
+    }
+
     // Set board to board object
     board = $("#board");
     // Prepare our Canvas
