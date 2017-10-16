@@ -39,17 +39,41 @@
           <div onclick="isready = !isready; ready(isready);" id="toggleready" class="notready"><i class="fa fa-check"></i></div>
           <div onclick="reset = !reset; togglereset(reset);" id="togglereset"><i class="fa fa-refresh"></i></div>
         </div>
+
         <div id="login">
-          <img width=200px src="./logo.PNG" style="border-radius:5px; box-shadow: 0 0 4px black;">
-          <br>
-          <br>
-          <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname"><br>
-          <button onclick="createGame()" id="create" class="gamebutton" style="font-size:23px;margin-top:20px;">Create game</button>
-          <button onclick="joinGame()" id="join" class="gamebutton" style="display: none;font-size:23px;margin-top:20px;">Join game</button>
+            <div class="content">
+                <img width=200px src="./logo.PNG" style="border-radius:5px; box-shadow: 0 0 4px black;">
+                <br>
+                <br>
+                <table class="desktop">
+                    <tr>
+                        <td>
+                            <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname">                                
+                        </td>
+                        <td>
+                            <button onclick="createGame()" id="create" class="gamebutton" style="font-size:23px;margin-top:20px;">Create game</button><br>                                
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="joingameid" type="text" placeholder="Game ID" style="font-size:18px;" onchange="window.location.hash = this.value" onkeyup="window.location.hash = this.value">                                             
+                        </td>
+                        <td>
+                            <button onclick="joinGame()" id="join" class="gamebutton" style="font-size:23px;margin-top:20px;" disabled>Join game</button>                                
+                        </td>
+                    </tr>
+                </table>
+                <div class="mobile" style="text-align: center">
+                    <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname">                                
+                    <button onclick="createGame()" id="create" class="gamebutton" style="font-size:23px;margin-top:20px;">Create game</button><br>                                
+                    <input id="joingameid" type="text" placeholder="Game ID" style="font-size:18px;" onchange="window.location.hash = this.value" onkeyup="window.location.hash = this.value">                                             
+                    <button onclick="joinGame()" id="join" class="gamebutton" style="font-size:23px;margin-top:20px;" disabled>Join game</button>                                
+                </div>
+            </div>
         </div>
 
         <div id="board" style="display: none;">
-            <canvas id="cv" width="360" height="360">HTML5 not supported by your browser! Please upgrade.</canvas>
+            <canvas id="cv" width="360" height="360">Canvas not supported by your browser! Please upgrade.</canvas>
         </div>
         <div id="belowboard">
           <span id="text"></span>
@@ -79,8 +103,10 @@
             <div id="turndude">Turn: <span id="turnman">Game not started</span></div>
         </div>
 
-        <div id="topright">
-            <span onclick="dropdown('#info', this)" id="dropbtn">&#9658;</span><input id="sharelink" type="text" readonly placeholder="Not in game">
+        <div id="settings">
+            <span onclick="dropdown('#info', this)" id="dropbtn">&#9658; &#9664;</span>
+            Share Link: <input id="sharelink" type="text" placeholder="Not in game">
+            Game ID: <input id="shareid" type="text" placeholder="Not in game">
             <table id="info" class="dropdown">
                 <tr>
                     <td class="row1">
@@ -100,7 +126,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label>
+                        <label class="desktop">
                             <input type="checkbox" id="toggleAnim_">
                             <div onclick="toggleAnim()" id="toggleAnim">Toggle Background Animation</div>
                         </label>

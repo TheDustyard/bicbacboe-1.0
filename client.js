@@ -297,8 +297,7 @@ function gameValid() {
     $('#invalidgame').style.display = "none";
     $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
     $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
-    $('#create').style.display = "none";
-    $('#join').style.display = "inline";
+    $('#join').disabled = false;
 }
 /**
  * Shows a <b>Invalid Game</b> message
@@ -309,8 +308,7 @@ function gameInvalid() {
     $('#invalidgame').style.display = "block";
     $('#gameID').src = `https://img.shields.io/badge/Game-Invalid-red.svg?style=flat-square`;
     $('#sharelink').value = '';
-    $('#create').style.display = "inline";
-    $('#join').style.display = "none";
+    $('#join').disabled = true;
 }
 /**
  * Shows a <b>Full Game</b> message
@@ -321,8 +319,7 @@ function gameFull() {
     $('#invalidgame').style.display = "none";
     $('#gameID').src = `https://img.shields.io/badge/Game-Full-red.svg?style=flat-square`;
     $('#sharelink').value = '';
-    $('#create').style.display = "inline";
-    $('#join').style.display = "none";
+    $('#join').disabled = true;
 }
 /**
  * Shows a <b>No Game</b> message
@@ -333,8 +330,7 @@ function noGame() {
     $('#invalidgame').style.display = "none";
     $('#gameID').src = `https://img.shields.io/badge/Game%20ID-None-yellow.svg?style=flat-square`;
     $('#sharelink').value = '';
-    $('#create').style.display = "inline";
-    $('#join').style.display = "none";
+    $('#join').disabled = true;
 }
 /**
  * Disconnets you from the current game and returns you back to the login page
