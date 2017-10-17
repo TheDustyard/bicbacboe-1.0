@@ -27,13 +27,6 @@
         <link rel="apple-touch-icon" href="/Bx192.png">
     </head>
     <body onload="login()" onhashchange="validate();">
-        <div id="connecting">Connecting ...</div>
-        <div id="disconnected">Disconnected from server</div>
-        <div id="banned">Banned</div>
-        <div id="fullgame">Game full</div>
-        <div id="invalidgame">Invalid game</div>
-        <div id="invalidname">Invalid name</div>
-
         <div id="buttonset" style="display: none;">
           <div onclick="leaveGame()" id="quit"><i class="fa fa-sign-out"></i></div>
           <div onclick="isready = !isready; ready(isready);" id="toggleready" class="notready"><i class="fa fa-check"></i></div>
@@ -44,7 +37,7 @@
             <div class="content">
                 <img width=200px src="./logo.PNG" style="border-radius:5px; box-shadow: 0 0 4px black;">
                 <br>
-                <table class="desktop">
+                <!-- <table class="desktop">
                     <tr>
                         <td>
                             <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname">                                
@@ -61,8 +54,8 @@
                             <button onclick="joinGame()" id="join" class="gamebutton" style="font-size:23px;margin-top:20px;" disabled>Join game</button>                                
                         </td>
                     </tr>
-                </table>
-                <div class="mobile" style="text-align: center">
+                </table> -->
+                <div style="text-align: center">
                     <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname">                                
                     <button onclick="createGame()" id="create" class="gamebutton" style="font-size:23px;margin-top:20px;">Create game</button><br>                                
                     <input id="joingameid" type="text" placeholder="Game ID" style="font-size:18px;" onchange="window.location.hash = this.value" onkeyup="window.location.hash = this.value">                                             
@@ -102,7 +95,7 @@
             <div id="turndude">Turn: <span id="turnman">Game not started</span></div>
         </div>
 
-        <div id="settings">
+        <!-- <div id="settings">
             <span onclick="dropdown('#info', this)" id="dropbtn">&#9658; &#9664;</span>
             Share Link: <input id="sharelink" type="text" placeholder="Not in game">
             Game ID: <input id="shareid" type="text" placeholder="Not in game">
@@ -132,6 +125,13 @@
                     </td>
                 </tr>
             </table>
-        </div>
+        </div> -->
+
+        <div id="connecting">Connecting ...</div>
+        <div id="disconnected">Disconnected from server</div>
+        <div id="banned">Banned</div>
+        <div id="fullgame">Game full</div>
+        <div id="invalidgame">Invalid game</div>
+        <div id="invalidname">Invalid name</div>
     </body>
 </html>

@@ -239,8 +239,8 @@ function connecting() {
     connectimeout = setTimeout(() => {
         $('#connecting').style.display = "block";
     }, 1000);
-    $('#status').src = "https://img.shields.io/badge/Connection%20Status-Connecting...-yellow.svg?style=flat-square";
-    $('#reconnect').setAttribute('disabled', true); // Disables the reconnect button?
+    // $('#status').src = "https://img.shields.io/badge/Connection%20Status-Connecting...-yellow.svg?style=flat-square";
+    // $('#reconnect').setAttribute('disabled', true); // Disables the reconnect button?
 }
 
 // toggles background animation
@@ -266,8 +266,8 @@ function disconnected() {
     clearTimeout(connectimeout);
     $('#disconnected').style.display = "block";
     $('#connecting').style.display = "none";
-    $('#status').src = "https://img.shields.io/badge/Connection%20Status-Disconnected-yellow.svg?style=flat-square";
-    $('#reconnect').removeAttribute('disabled'); // Enables the reconnect button?
+    // $('#status').src = "https://img.shields.io/badge/Connection%20Status-Disconnected-yellow.svg?style=flat-square";
+    // $('#reconnect').removeAttribute('disabled'); // Enables the reconnect button?
 }
 /**
  * Shows the banned text <i>:yellow_fruit:</i>
@@ -276,7 +276,7 @@ function disconnected() {
 function banned() {
     disconnected();
     $('#banned').style.display = "block";
-    $('#status').src = "https://img.shields.io/badge/Connection%20Status-Banned-red.svg?style=flat-square";
+    // $('#status').src = "https://img.shields.io/badge/Connection%20Status-Banned-red.svg?style=flat-square";
 }
 /**
  * Recovers from the connecting status and shows the connected status
@@ -285,8 +285,8 @@ function banned() {
 function connected() {
     clearTimeout(connectimeout);
     $('#connecting').style.display = "none";
-    $('#status').src = "https://img.shields.io/badge/Connection%20Status-Connected-green.svg?style=flat-square";
-    $('#reconnect').setAttribute('disabled', true); // Disables the reconnect button? Is there even a reconnect button?
+    // $('#status').src = "https://img.shields.io/badge/Connection%20Status-Connected-green.svg?style=flat-square";
+    // $('#reconnect').setAttribute('disabled', true); // Disables the reconnect button? Is there even a reconnect button?
 }
 /**
  * Hides all warnings about an invalid game
@@ -306,8 +306,8 @@ function gameValid() {
 function gameInvalid() {
     $('#fullgame').style.display = "none";
     $('#invalidgame').style.display = "block";
-    $('#gameID').src = `https://img.shields.io/badge/Game-Invalid-red.svg?style=flat-square`;
-    $('#sharelink').value = '';
+    // $('#gameID').src = `https://img.shields.io/badge/Game-Invalid-red.svg?style=flat-square`;
+    // $('#sharelink').value = '';
     $('#join').disabled = true;
 }
 /**
@@ -317,8 +317,8 @@ function gameInvalid() {
 function gameFull() {
     $('#fullgame').style.display = "block";
     $('#invalidgame').style.display = "none";
-    $('#gameID').src = `https://img.shields.io/badge/Game-Full-red.svg?style=flat-square`;
-    $('#sharelink').value = '';
+    // $('#gameID').src = `https://img.shields.io/badge/Game-Full-red.svg?style=flat-square`;
+    // $('#sharelink').value = '';
     $('#join').disabled = true;
 }
 /**
@@ -328,8 +328,8 @@ function gameFull() {
 function noGame() {
     $('#fullgame').style.display = "none";
     $('#invalidgame').style.display = "none";
-    $('#gameID').src = `https://img.shields.io/badge/Game%20ID-None-yellow.svg?style=flat-square`;
-    $('#sharelink').value = '';
+    // $('#gameID').src = `https://img.shields.io/badge/Game%20ID-None-yellow.svg?style=flat-square`;
+    // $('#sharelink').value = '';
     $('#join').disabled = true;
 }
 /**
@@ -355,8 +355,8 @@ function leftGame() {
 function joinedGame() {
     $('#fullgame').style.display = "none";
     $('#invalidgame').style.display = "none";
-    $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
-    $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
+    // $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
+    // $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
     $('#login').style.display = "none";
     $('#board').style.display = "block";
     $('#buttonset').style.display = "block";
