@@ -295,8 +295,8 @@ function connected() {
 function gameValid() {
     $('#fullgame').style.display = "none";
     $('#invalidgame').style.display = "none";
-    $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
-    $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
+    // $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
+    // $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
     $('#join').disabled = false;
 }
 /**

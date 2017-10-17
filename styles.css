@@ -75,8 +75,8 @@ html, body {
     transition: background-color 0.3s;
 }
 .gamebutton:disabled {
-    color: white;
-    background-color: #2b2b2b;
+    color: rgb(197, 197, 197);
+    background-color: #616161;
 }
 #settings {
     display: block;
