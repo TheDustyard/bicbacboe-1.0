@@ -1,3 +1,5 @@
+/// <reference path="utils.js" />
+
 // Basically equals the time it takes for a frame to pass with 60 FPS
 const fps60 = 1000 / 60;
 
@@ -79,6 +81,9 @@ function login() {
         });
     }
 
+    
+    $('#joingameid').value = window.location.hash.replace('#', '');
+
     // Set board to board object
     board = $("#board");
     // Prepare our Canvas
@@ -98,6 +103,7 @@ function login() {
         switch (data.type) {
             case "joinedGame":
                 window.location.hash = data.tournamentID;
+                $('#gameid').innerHTML = data.tournamentID;   
                 piece = data.piece;
                 for(x = 0; x < 3; x++)
                   for(y = 0; y < 3; y++)
@@ -295,7 +301,6 @@ function connected() {
 function gameValid() {
     $('#fullgame').style.display = "none";
     $('#invalidgame').style.display = "none";
-    // $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
     // $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
     $('#join').disabled = false;
 }
@@ -306,7 +311,6 @@ function gameValid() {
 function gameInvalid() {
     $('#fullgame').style.display = "none";
     $('#invalidgame').style.display = "block";
-    // $('#gameID').src = `https://img.shields.io/badge/Game-Invalid-red.svg?style=flat-square`;
     // $('#sharelink').value = '';
     $('#join').disabled = true;
 }
@@ -317,7 +321,6 @@ function gameInvalid() {
 function gameFull() {
     $('#fullgame').style.display = "block";
     $('#invalidgame').style.display = "none";
-    // $('#gameID').src = `https://img.shields.io/badge/Game-Full-red.svg?style=flat-square`;
     // $('#sharelink').value = '';
     $('#join').disabled = true;
 }
@@ -328,7 +331,6 @@ function gameFull() {
 function noGame() {
     $('#fullgame').style.display = "none";
     $('#invalidgame').style.display = "none";
-    // $('#gameID').src = `https://img.shields.io/badge/Game%20ID-None-yellow.svg?style=flat-square`;
     // $('#sharelink').value = '';
     $('#join').disabled = true;
 }
@@ -337,7 +339,9 @@ function noGame() {
  * @memberof Visuals
  */
 function leftGame() {
-    $('#sharelink').value = "";
+    //$('#sharelink').value = "";
+    $('#joingameid').value = "";
+    $('#nickname').value = "";
     $('#login').style.display = "block";
     $('#board').style.display = "none";
     $('#buttonset').style.display = "none";
@@ -354,8 +358,7 @@ function leftGame() {
  */
 function joinedGame() {
     $('#fullgame').style.display = "none";
-    $('#invalidgame').style.display = "none";
-    // $('#gameID').src = `https://img.shields.io/badge/Game-Valid-green.svg?style=flat-square`;
+    $('#invalidgame').style.display = "none"; 
     // $('#sharelink').value = window.location.href; // Sets the share link in the top right corner
     $('#login').style.display = "none";
     $('#board').style.display = "block";

@@ -86,66 +86,22 @@ html, body {
     padding: 0;
     background-color: white
 }
-#settings input[type="text"] {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    border-bottom: solid 1.5px black
-}
-#settings input[type="text"]:focus {
-    border-bottom: solid 1.5px red;
-}
-/* #settings {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0px;
-    padding: 10px;
-    background-color: darkgray;
-}
-#settings input {
-    background-color: darkgray;
-    border: none;
-    border-bottom: solid black 1px;
-}
 
-#info {
-    margin: 0px;
-    padding: 10px;
-}
-#info img {
-    vertical-align: middle;
-    padding: 0px 5px 0px 0px;
-}
-
-#sharelink {
-    width: calc((100% - 10px) - 25px)
-}
-#dropbtn {
-    width: 20px;
-    padding-right: 5px;
+#gameid {
+    height: 20px;
+    background: red;
+    border: 1px solid white;
+    border-bottom: 2px solid white;
+    font-size: 15px;
     text-align: center;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select:none;
-    user-select:none;
-    -o-user-select:none;
-        cursor: pointer;
+    user-select: all;
 }
-
-.dropdown {
-    transition: all 1s;
+#gameid:hover {
+    height: 20px;
+    background: green;
+    border: 1px solid white;
+    border-bottom: 2px solid white;
 }
-.dropdown.down {
-    height: 100%;
-    display: block;
-    transition: height 1s;
-}
-.dropdown {
-    height: 0%;
-    display: none;
-    transition: height 1s;
-} */
 
 #connecting {
     position: fixed;

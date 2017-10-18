@@ -1,9 +1,32 @@
 /**
  * Basically equals <b>document.querySelector</b> ¯\_(ツ)_/¯<br>
  * Small change? I THINK NOT!
+ * @returns {HTMLElement}
  * @kind method
  */
 const $ = function() { return document.querySelector.apply(document, arguments); };
+
+/**
+ * Select all text in an html element
+ * @param {HTMLElement} element 
+ */
+function SelectText(element) {
+  var doc = document
+      , text = doc.getElementById(element)
+      , range, selection
+  ;    
+  if (doc.body.createTextRange) {
+      range = document.body.createTextRange();
+      range.moveToElementText(text);
+      range.select();
+  } else if (window.getSelection) {
+      selection = window.getSelection();        
+      range = document.createRange();
+      range.selectNodeContents(text);
+      selection.removeAllRanges();
+      selection.addRange(range);
+  }
+}
 
 // A shim to better accomodate browsers without requestAnimationFrame
 // Thanks https://www.paulirish.com/2011/requestanimationframe-for-smart-animating/

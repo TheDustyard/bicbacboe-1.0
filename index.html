@@ -30,33 +30,16 @@
     </head>
     <body onload="login()" onhashchange="validate();">
         <div id="buttonset" style="display: none;">
-          <div onclick="leaveGame()" id="quit"><i class="fa fa-sign-out"></i></div>
-          <div onclick="isready = !isready; ready(isready);" id="toggleready" class="notready"><i class="fa fa-check"></i></div>
-          <div onclick="reset = !reset; togglereset(reset);" id="togglereset"><i class="fa fa-refresh"></i></div>
+            <div id="gameid" onclick="SelectText('gameid'); document.execCommand('copy'); SelectText('toggleready');">ddd</div><br>
+            <div onclick="leaveGame()" id="quit"><i class="fa fa-sign-out"></i></div>
+            <div onclick="isready = !isready; ready(isready);" id="toggleready" class="notready"><i class="fa fa-check"></i></div>
+            <div onclick="reset = !reset; togglereset(reset);" id="togglereset"><i class="fa fa-refresh"></i></div>
         </div>
 
         <div id="login">
             <div class="content">
                 <img width=200px src="./logo.PNG" style="border-radius:5px; box-shadow: 0 0 4px black;">
                 <br>
-                <!-- <table class="desktop">
-                    <tr>
-                        <td>
-                            <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname">                                
-                        </td>
-                        <td>
-                            <button onclick="createGame()" id="create" class="gamebutton" style="font-size:23px;margin-top:20px;">Create game</button><br>                                
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="joingameid" type="text" placeholder="Game ID" style="font-size:18px;" onchange="window.location.hash = this.value" onkeyup="window.location.hash = this.value">                                             
-                        </td>
-                        <td>
-                            <button onclick="joinGame()" id="join" class="gamebutton" style="font-size:23px;margin-top:20px;" disabled>Join game</button>                                
-                        </td>
-                    </tr>
-                </table> -->
                 <div style="text-align: center">
                     <input id="nickname" type="text" style="font-size:18px;" placeholder="Nickname">                                
                     <button onclick="createGame()" id="create" class="gamebutton" style="font-size:23px;margin-top:20px;">Create game</button><br>                                
@@ -68,12 +51,6 @@
 
         <div id="board" style="display: none;">
             <canvas id="cv" width="360" height="360">Canvas not supported by your browser! Please upgrade.</canvas>
-        </div>
-        <div id="belowboard">
-          <span id="text"></span>
-          <div id="gamerematch">
-
-          </div>
         </div>
         <div id="gameinfo" style="display: none;">
             <table cellspacing=0 cellpadding=0>
@@ -96,38 +73,6 @@
             </table>
             <div id="turndude">Turn: <span id="turnman">Game not started</span></div>
         </div>
-
-        <!-- <div id="settings">
-            <span onclick="dropdown('#info', this)" id="dropbtn">&#9658; &#9664;</span>
-            Share Link: <input id="sharelink" type="text" placeholder="Not in game">
-            Game ID: <input id="shareid" type="text" placeholder="Not in game">
-            <table id="info" class="dropdown">
-                <tr>
-                    <td class="row1">
-                        <img id="gameID" src="https://img.shields.io/badge/Game%20ID-None-yellow.svg?style=flat-square">
-                    </td>
-                    <td class="row2">
-                        <button onclick="validate()">Refresh</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="row1">
-                        <img id="status" src="https://img.shields.io/badge/Connection%20Status-Connecting...-yellow.svg?style=flat-square">
-                    </td>
-                    <td  class="row2">
-                        <button onclick='reconnect()' disabled id="reconnect">Reconnect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label class="desktop">
-                            <input type="checkbox" id="toggleAnim_">
-                            <div onclick="toggleAnim()" id="toggleAnim">Toggle Background Animation</div>
-                        </label>
-                    </td>
-                </tr>
-            </table>
-        </div> -->
 
         <div id="connecting">Connecting ...</div>
         <div id="disconnected">Disconnected from server</div>
