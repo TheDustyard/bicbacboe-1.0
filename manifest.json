@@ -7,6 +7,7 @@
     "theme_color": "#D20000",
     "background_color": "#D20000",
     "version":"1.0.0",
+    "manifest_version": 2,
     "icons": [
         {
             "src": "Bx144.png",
