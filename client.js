@@ -450,10 +450,12 @@ function matchUpdate(data) {
 
     if (this.gameplaying === true) {
         $('#toggleready').style.display = "none";
+        $('#gameid').style.display = "none";
         $('#turnman').innerHTML = pieces[turn.toUpperCase()];
         $('#turndude').style.display = "block";
     } else {
         $('#toggleready').style.display = "inline-block";
+        $('#gameid').style.display = "block";
         $('#turndude').style.display = "none";
     }
 }
