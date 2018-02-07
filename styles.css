@@ -54,6 +54,9 @@ html, body {
     transition: border-bottom 1s;
     text-align: center;
 }
+.content img {
+      pointer-events: none;
+}
 .gamebutton {
     color: white;
     background-color: #2b2b2b;
@@ -118,6 +121,7 @@ html, body {
     padding: 5px;
     background-color: #c94040;
     display: none;
+    color: white;
 }
 #banned {
     position: fixed;
