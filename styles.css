@@ -32,12 +32,18 @@ html, body {
     100%{background-position:0% 50%}
 }
 
-#login {
+#login, header{
     background: linear-gradient(270deg, #d6b3ee, #cd2cce, #ce2c2c);
     background-size: 600% 600%;
     -webkit-animation: animBack 30s ease infinite;
     -moz-animation: animBack 30s ease infinite;
     animation: animBack 30s ease infinite;
+}
+header {
+    display: inline-block;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
 }
 
 #login input[type="text"] {
